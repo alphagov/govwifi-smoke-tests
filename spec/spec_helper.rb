@@ -1,4 +1,5 @@
 require "capybara/rspec"
+require "rotp"
 
 RSpec.configure do |config|
   config.filter_run focus: true
@@ -9,8 +10,18 @@ RSpec.configure do |config|
 
   config.include Capybara::DSL
 
-  Capybara.configure do |config|
-    config.run_server = false
-    config.default_driver = :selenium_headless
+  config.before(:each, with_login: true) do
+    visit "/users/sign_in"
+    fill_in "user[email]", with: ENV["GW_USER"]
+    fill_in "user[password]", with: ENV["GW_PASS"]
+    click_button "Continue"
+    totp = ROTP::TOTP.new(ENV["GW_2FA_SECRET"])
+    fill_in "code", with: totp.now
+    click_button "Authenticate"
   end
+end
+
+Capybara.configure do |config|
+  config.run_server = false
+  config.default_driver = :selenium_headless
 end

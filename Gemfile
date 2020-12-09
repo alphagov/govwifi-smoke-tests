@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 group :test do
   gem "capybara"
+  gem "rotp"
   gem "rspec"
   gem "rubocop-govuk"
   gem "selenium-webdriver"

@@ -38,6 +38,7 @@ GEM
     rainbow (3.0.0)
     regexp_parser (1.8.2)
     rexml (3.2.4)
+    rotp (6.2.0)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -94,6 +95,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  rotp
   rspec
   rubocop-govuk
   selenium-webdriver

@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        BUNDLE_INSTALL_FLAGS: "${BUNDLE_INSTALL_FLAGS:- --jobs 20 --retry 5}"

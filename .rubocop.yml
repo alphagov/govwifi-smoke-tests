@@ -1,0 +1,9 @@
+# .rubocop.yml
+inherit_gem:
+  rubocop-govuk:
+    - config/default.yml
+
+# this means we add our excludes to the default ones
+inherit_mode:
+  merge:
+    - Exclude

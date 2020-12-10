@@ -1,8 +1,4 @@
 feature "Admin" do
-  before do
-    Capybara.app_host = "http://admin.staging.wifi.service.gov.uk"
-  end
-
   describe "Logging in" do
     it "logs in the user successfully" do
       visit "/users/sign_in"

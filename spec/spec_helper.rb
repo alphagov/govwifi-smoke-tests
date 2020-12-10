@@ -24,4 +24,5 @@ end
 Capybara.configure do |config|
   config.run_server = false
   config.default_driver = :selenium_headless
+  Capybara.app_host = "http://admin.staging.wifi.service.gov.uk"
 end

@@ -16,22 +16,22 @@ feature "Admin" do
   end
 
   describe "Change Password", :with_login do
-    it "changes the user's password" do
+    def change_password(old_password, new_password)
       visit "/users/edit"
-      fill_in "user[current_password]", with: ENV["GW_PASS"]
-      fill_in "user[password]", with: "Correct horse 8attery stap!e"
-      fill_in "user[password_confirmation]", with: "Correct horse 8attery stap!e"
+      fill_in "user[current_password]", with: old_password
+      fill_in "user[password]", with: new_password
+      fill_in "user[password_confirmation]", with: new_password
       click_button "Submit"
+    end
+
+    it "changes the user's password" do
+      change_password ENV["GW_PASS"], "Correct horse 8attery stap!e"
 
       expect(page).to have_content "Your account has been updated successfully."
     end
 
     after do
-      visit "/users/edit"
-      fill_in "user[current_password]", with: "Correct horse 8attery stap!e"
-      fill_in "user[password]", with: ENV["GW_PASS"]
-      fill_in "user[password_confirmation]", with: ENV["GW_PASS"]
-      click_button "Submit"
+      change_password "Correct horse 8attery stap!e", ENV["GW_PASS"]
     end
   end
 end

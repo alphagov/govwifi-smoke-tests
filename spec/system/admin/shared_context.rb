@@ -13,4 +13,8 @@ RSpec.shared_context "admin", shared_context: :metadata do
     fill_in "code", with: totp.now
     click_button "Authenticate"
   end
+
+  def logout
+    click_link "Sign out"
+  end
 end

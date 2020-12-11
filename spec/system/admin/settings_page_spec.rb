@@ -19,7 +19,7 @@ feature "Settings Page" do
       expect(page).to have_content "Your account has been updated successfully."
     end
 
-    it "successfully logs in with the new password" do
+    it "logs in with the new password" do
       login(new_password)
 
       expect(page).to have_content "Overview"

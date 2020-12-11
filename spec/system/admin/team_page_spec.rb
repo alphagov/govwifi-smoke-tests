@@ -8,9 +8,16 @@ feature "Team Page" do
   end
 
   describe "Managing Team members", order: :defined do
+    before(:all) do
+      login
+      visit "/overview"
+      @team_members_count = find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i
+      logout
+    end
+
     let(:test_email) { ENV["GW_USER"].sub("@", "+automated-test@") }
 
-    it "successfully adds a team member" do
+    it "adds a team member" do
       login
       visit "/memberships"
       click_link "Invite team member"
@@ -20,7 +27,14 @@ feature "Team Page" do
       expect(page).to have_content "#{test_email} has been invited to join Government Digital Service"
     end
 
-    it "successfully removes a team member" do
+    it "shows the expected information on overview page" do
+      login
+      visit "/overview"
+
+      expect(find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count + 1)
+    end
+
+    it "removes a team member" do
       login
       visit "/memberships"
       find(:xpath, "//*[contains(text(), '#{test_email} (invited)')]/ancestor::li/descendant::a[contains(text(), 'Edit permissions')]").click
@@ -28,6 +42,13 @@ feature "Team Page" do
       click_button "Yes, remove this team member"
 
       expect(page).to have_content "Team member has been removed"
+    end
+
+    it "shows the expected information on overview page" do
+      login
+      visit "/overview"
+
+      expect(find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count)
     end
   end
 end

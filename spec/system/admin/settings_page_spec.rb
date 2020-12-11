@@ -27,4 +27,18 @@ feature "Settings Page" do
       change_password new_password, ENV["GW_PASS"]
     end
   end
+
+  describe "GovWifi servers", :focus do
+    it "shows three london servers" do
+      login
+      visit "/setup_instructions"
+      expect(page).to have_css("#london-radius-ips .ip-address", count: 3)
+    end
+
+    it "shows three dublin servers" do
+      login
+      visit "/setup_instructions"
+      expect(page).to have_css("#dublin-radius-ips .ip-address", count: 3)
+    end
+  end
 end

@@ -28,7 +28,7 @@ feature "Settings Page" do
     end
   end
 
-  describe "GovWifi servers", :focus do
+  describe "GovWifi servers" do
     it "shows three london servers" do
       login
       visit "/setup_instructions"

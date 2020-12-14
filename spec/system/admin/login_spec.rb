@@ -4,7 +4,8 @@ feature "Login" do
   describe "Logging in" do
     it "logs in the user successfully" do
       login
-      expect(page).to have_content "Overview"
+      expect(page).to have_xpath "//h2[text()='Overview']"
+
     end
   end
 end

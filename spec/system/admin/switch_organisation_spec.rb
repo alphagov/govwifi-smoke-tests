@@ -1,4 +1,4 @@
-feature "Switch Organisation", :focus do
+feature "Switch Organisation" do
   include_context "admin"
 
   it "has the expected content" do

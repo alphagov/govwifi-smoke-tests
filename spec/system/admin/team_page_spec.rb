@@ -4,7 +4,7 @@ feature "Team Page" do
   it "has the expected content" do
     login
     visit "/memberships"
-    expect(page).to have_content "Team members"
+    expect(page).to have_xpath "//h1[text()='Team members']"
   end
 
   describe "Managing Team members", order: :defined do

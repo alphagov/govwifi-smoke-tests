@@ -22,7 +22,7 @@ feature "Settings Page" do
     it "logs in with the new password" do
       login(new_password)
 
-      expect(page).to have_content "Overview"
+      expect(page).to have_xpath "//h2[text()='Overview']"
 
       change_password new_password, ENV["GW_PASS"]
     end
@@ -32,12 +32,14 @@ feature "Settings Page" do
     it "shows three london servers" do
       login
       visit "/setup_instructions"
+
       expect(page).to have_css("#london-radius-ips .ip-address", count: 3)
     end
 
     it "shows three dublin servers" do
       login
       visit "/setup_instructions"
+
       expect(page).to have_css("#dublin-radius-ips .ip-address", count: 3)
     end
   end

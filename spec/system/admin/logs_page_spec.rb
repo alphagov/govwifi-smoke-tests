@@ -13,9 +13,9 @@ feature "Logs Page" do
       visit "/logs/search/new"
       choose "Username", visible: false # Styling means the underlying radio is hidden.
 
-      # # This isn't working. I have no idea why.
-      # # It works fine in normal mode, but fails in headless.
-      # # It's just clicking a button, like any other button.
+      # This isn't working. I don't know why.
+      # It works fine in normal mode, but fails in headless.
+      # It's just clicking a button, like any other button.
       # click_button "Go to search"
 
       # This is the workaround:

@@ -5,7 +5,8 @@ feature "Settings Page" do
     let(:new_password) { "Correct horse 8attery stap!e" }
 
     def change_password(old_password, new_password)
-      visit "/users/edit"
+      within(".leftnav") { click_link "Settings" }
+      click_link "Change your password"
       fill_in "user[current_password]", with: old_password
       fill_in "user[password]", with: new_password
       fill_in "user[password_confirmation]", with: new_password
@@ -13,13 +14,13 @@ feature "Settings Page" do
     end
 
     it "changes the user's password" do
-      login
       change_password ENV["GW_PASS"], new_password
 
       expect(page).to have_content "Your account has been updated successfully."
     end
 
     it "logs in with the new password" do
+      logout
       login(new_password)
 
       expect(page).to have_xpath "//h2[text()='Overview']"
@@ -30,15 +31,13 @@ feature "Settings Page" do
 
   describe "GovWifi servers" do
     it "shows three london servers" do
-      login
-      visit "/setup_instructions"
+      within(".leftnav") { click_link "Settings" }
 
       expect(page).to have_css("#london-radius-ips .ip-address", count: 3)
     end
 
     it "shows three dublin servers" do
-      login
-      visit "/setup_instructions"
+      within(".leftnav") {  click_link "Settings" }
 
       expect(page).to have_css("#dublin-radius-ips .ip-address", count: 3)
     end

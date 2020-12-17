@@ -2,15 +2,13 @@ feature "Logs Page" do
   include_context "admin"
 
   it "has the expected content" do
-    login
-    visit "/logs/search/new"
+    within(".leftnav") { click_link "Logs" }
     expect(page).to have_content "Logs are kept for recent authentication requests made to the GovWifi service."
   end
 
   describe "Search" do
     it "shows the expected results page" do
-      login
-      visit "/logs/search/new"
+      within(".leftnav") { click_link "Logs" }
       choose "Username", visible: false # Styling means the underlying radio is hidden.
 
       # This isn't working. I don't know why.

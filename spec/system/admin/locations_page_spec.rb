@@ -2,24 +2,20 @@ feature "Locations Page" do
   include_context "admin"
 
   it "has the expected content" do
-    login
-    visit "/ips"
+    within(".leftnav") { click_link "Locations" }
 
     expect(page).to have_xpath "//h1[text()='Locations']"
   end
 
   describe "Locations", order: :defined do
     before(:all) do
-      login
-      visit "/overview"
+      visit "/"
       @locations_count = find(:xpath, "//h1[@id='locations-count']")["innerText"].to_i
       @ips_count = find(:xpath, "//h1[@id='ips-count']")["innerText"].to_i
-      logout
     end
 
     it "adds a location" do
-      login
-      visit "/ips"
+      within(".leftnav") { click_link "Locations" }
       click_link "Add a location"
       fill_in "location[address]", with: "Automated Test Location"
       fill_in "location[postcode]", with: "N1"
@@ -29,8 +25,7 @@ feature "Locations Page" do
     end
 
     it "adds an IP address" do
-      login
-      visit "/ips"
+      within(".leftnav") { click_link "Locations" }
       find(:xpath, "//*[contains(text(), 'Automated Test Location, N1')]/ancestor::caption/descendant::a[text()='Add IP addresses']").click
       fill_in "location[ips_attributes][0][address]", with: "8.8.8.8"
       click_button "Add IP addresses"
@@ -39,16 +34,15 @@ feature "Locations Page" do
     end
 
     it "shows the expected information on overview page" do
-      login
-      visit "/overview"
+      visit "/"
 
       expect(find(:xpath, "//h1[@id='locations-count']")["innerText"].to_i).to be(@locations_count + 1)
       expect(find(:xpath, "//h1[@id='ips-count']")["innerText"].to_i).to be(@ips_count + 1)
     end
 
     it "deletes an IP address" do
-      login
-      visit "/ips"
+      within(".leftnav") { click_link "Locations" }
+
       # Would prefer to select this by IP, however the additional markup around the IP is making that difficult.
       find(:xpath, "//*[contains(text(), 'Automated Test Location, N1')]/ancestor::table/descendant::a[text()='Remove']").click
       click_button "Remove"
@@ -57,8 +51,8 @@ feature "Locations Page" do
     end
 
     it "deletes a location" do
-      login
-      visit "/ips"
+      within(".leftnav") { click_link "Locations" }
+
       find(:xpath, "//*[contains(text(), 'Automated Test Location, N1')]/ancestor::table/descendant::a[text()='Remove this location']").click
       click_button "Yes, remove this location"
 
@@ -66,8 +60,7 @@ feature "Locations Page" do
     end
 
     it "shows the expected information on overview page" do
-      login
-      visit "/overview"
+      visit "/"
 
       expect(find(:xpath, "//h1[@id='locations-count']")["innerText"].to_i).to be(@locations_count)
       expect(find(:xpath, "//h1[@id='ips-count']")["innerText"].to_i).to be(@ips_count)

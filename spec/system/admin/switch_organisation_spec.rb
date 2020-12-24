@@ -9,8 +9,8 @@ feature "Switch Organisation" do
 
   it "switches location" do
     click_link "Switch organisation"
-    click_button "Administration of Radioactive Substances Advisory Committee"
+    click_button "Automated Test 2"
 
-    expect(page).to have_xpath "//div[contains(@class, 'organisation-name')]/strong[text()='Administration of Radioactive Substances Advisory Committee']"
+    expect(page).to have_xpath "//div[contains(@class, 'organisation-name')]/strong[text()='Automated Test 2']"
   end
 end

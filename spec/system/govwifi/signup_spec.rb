@@ -1,45 +1,27 @@
-require "net/imap"
-require "net/smtp"
+require_relative "../../../lib/google_mail"
 
 feature "GovWifi" do
   include_context "govwifi"
 
   it "signs up successfully" do
-    smtp = Net::SMTP.new("smtp.gmail.com", 25)
-    smtp.enable_starttls_auto
-    smtp.start
+    gmail = GoogleMail.new
 
-    smtp.authenticate(ENV["GMAIL_USER"], ENV["GMAIL_PASS"])
+    test_email = gmail.account_email.gsub(/@/, "+#{Time.now.to_i}@")
 
-    smtp.send_message(
-      "To: signup@staging.wifi.service.gov.uk\n" \
-        "From: govwifi-tests@digital.cabinet-office.gov.uk\n" \
-        "\n",
-      ENV["GMAIL_USER"],
+    gmail.send(
       "signup@staging.wifi.service.gov.uk",
+      test_email,
+      "",
+      "",
     )
 
     body = nil
 
     Timeout.timeout(20, nil, "Waited too long for signup email") do
-      imap = Net::IMAP.new("imap.googlemail.com", 993, true)
-      imap.login(ENV["GMAIL_USER"], ENV["GMAIL_PASS"])
-
       loop do
-        imap.select("Inbox")
-        unread_ids = imap.uid_search("UNSEEN")
-        unless unread_ids.empty?
-          message = imap.uid_fetch(unread_ids, "ENVELOPE",)&.select { |m|
-            /Welcome to (?:STAGING)? GovWifi/.match(m.attr["ENVELOPE"].subject)
-          }&.first
-
-          if message
-            body = imap.uid_fetch(message.attr["UID"], "RFC822")[0].attr["RFC822"]
-            imap.store(message.attr["UID"], "+FLAGS", [:Seen])
-
-            puts
-            break
-          end
+        if message = gmail.read("is:unread to:#{test_email}")
+          body = message&.payload&.parts&.first&.body&.data
+          break
         end
 
         print "."

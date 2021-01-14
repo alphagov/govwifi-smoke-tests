@@ -8,7 +8,7 @@ feature "Team Page" do
 
   describe "Managing Team members", order: :defined do
     before(:all) do
-      visit "/"
+      visit "/overview"
       @team_members_count = find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i
     end
 
@@ -24,7 +24,7 @@ feature "Team Page" do
     end
 
     it "shows the expected information on overview page" do
-      visit "/"
+      visit "/overview"
       expect(find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count + 1)
     end
 
@@ -39,7 +39,7 @@ feature "Team Page" do
     end
 
     it "shows the expected information on overview page" do
-      visit "/"
+      visit "/overview"
       expect(find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count)
     end
   end

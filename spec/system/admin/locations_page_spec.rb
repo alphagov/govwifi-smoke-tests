@@ -9,7 +9,7 @@ feature "Locations Page" do
 
   describe "Locations", order: :defined do
     before(:all) do
-      visit "/"
+      visit "/overview"
       @locations_count = find(:xpath, "//h1[@id='locations-count']")["innerText"].to_i
       @ips_count = find(:xpath, "//h1[@id='ips-count']")["innerText"].to_i
     end
@@ -18,7 +18,6 @@ feature "Locations Page" do
     let(:postcode) { "N1" }
 
     it "adds a location" do
-
       within(".leftnav") { click_link "Locations" }
       click_link "Add a location"
       fill_in "location[address]", with: location
@@ -38,7 +37,7 @@ feature "Locations Page" do
     end
 
     it "shows the expected information on overview page" do
-      visit "/"
+      visit "/overview"
 
       expect(find(:xpath, "//h1[@id='locations-count']")["innerText"].to_i).to be(@locations_count + 1)
       expect(find(:xpath, "//h1[@id='ips-count']")["innerText"].to_i).to be(@ips_count + 1)
@@ -64,7 +63,7 @@ feature "Locations Page" do
     end
 
     it "shows the expected information on overview page" do
-      visit "/"
+      visit "/overview"
 
       expect(find(:xpath, "//h1[@id='locations-count']")["innerText"].to_i).to be(@locations_count)
       expect(find(:xpath, "//h1[@id='ips-count']")["innerText"].to_i).to be(@ips_count)

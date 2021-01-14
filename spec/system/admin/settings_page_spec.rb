@@ -22,6 +22,7 @@ feature "Settings Page" do
     it "logs in with the new password" do
       logout
       login(new_password)
+      visit "/overview"
 
       expect(page).to have_xpath "//h2[text()='Overview']"
 

@@ -1,4 +1,5 @@
 require "capybara/rspec"
+require "rotp"
 
 RSpec.configure do |config|
   config.filter_run focus: true
@@ -8,9 +9,11 @@ RSpec.configure do |config|
   end
 
   config.include Capybara::DSL
-
-  Capybara.configure do |config|
-    config.run_server = false
-    config.default_driver = :selenium_headless
-  end
 end
+
+Capybara.configure do |config|
+  config.run_server = false
+  config.default_driver = ENV["DOCKER"] ? :selenium_headless : :selenium
+end
+
+Dir["./spec/system/*/shared_context.rb"].sort.each { |f| require f }

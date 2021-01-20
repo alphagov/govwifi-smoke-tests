@@ -1,0 +1,32 @@
+---
+
+resources:
+- name: ecr-govwifi-reg
+  type: docker-image
+  source:
+    AWS_ACCESS_KEY_ID: "((deploy-access-key-id))"
+    AWS_SECRET_ACCESS_KEY: "((deploy-secret-access-key))"
+    AWS_DEFAULT_REGION: "((deploy-region))"
+    repository: "((deploy-repository))"
+
+- name: git-repo
+  type: git
+  source:
+    uri: alphagov/govwifi-smoke-tests
+    branch: master
+
+jobs:
+- name: push-to-ecr
+  plan:
+  - get: git-repo
+  - put: ecr-govwifi-reg
+    params:
+      build: ./git-repo
+      tag_file: ./project-release/tag
+      GW_USER: "((GW_USER))"
+      GW_PASS: "((GW_PASS))"
+      GW_: "((GW_2FA_SECRET))"
+      GOOGLE_API_CREDENTIALS: "((GOOGLE_API_CREDENTIALS))"
+      GOOGLE_API_TOKEN_DATA: "((GOOGLE_API_TOKEN_DATA))"
+      RADIUS_KEY: "((RADIUS_KEY))"
+      RADIUS_IPS: "((RADIUS_IPS))"

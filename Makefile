@@ -15,8 +15,10 @@ test: build
 		-e GW_USER \
 		-e GW_PASS \
 		-e GW_2FA_SECRET \
-		-e GMAIL_USER \
-		-e GMAIL_PASS \
+		-e GOOGLE_API_CREDENTIALS \
+		-e GOOGLE_API_TOKEN_DATA \
+		-e RADIUS_KEY \
+		-e RADIUS_IPS \
 		app bundle exec rspec
 
 stop:

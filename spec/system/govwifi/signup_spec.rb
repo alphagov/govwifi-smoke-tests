@@ -1,4 +1,5 @@
 require_relative "../../../lib/google_mail"
+require_relative "../../../lib/eapol_test"
 
 feature "GovWifi" do
   include_context "govwifi"
@@ -9,7 +10,7 @@ feature "GovWifi" do
     test_email = gmail.account_email.gsub(/@/, "+#{Time.now.to_i}@")
 
     gmail.send(
-      "signup@staging.wifi.service.gov.uk",
+      "signup@wifi.service.gov.uk",
       test_email,
       "",
       "",
@@ -29,10 +30,20 @@ feature "GovWifi" do
       end
     end
 
-    username = body.scan(/Your username: ([a-z]+)/)&.first&.first
+    identity = body.scan(/Your username: ([a-z]+)/)&.first&.first
     password = body.scan(/Your password: ([a-zA-Z]+)/)&.first&.first
 
-    expect(username).to be
+    expect(identity).to be
     expect(password).to be
+
+    radius_ips = ENV["RADIUS_IPS"].split(",")
+
+    radius_ips_successful = EapolTest.create(ssid: "GovWifi", identity: identity, password: password) do |eapol_test|
+      radius_ips.select do |radius_ip|
+        eapol_test.execute(ENV["RADIUS_KEY"], radius_ip)
+      end
+    end
+
+    expect(radius_ips_successful).to eq radius_ips
   end
 end

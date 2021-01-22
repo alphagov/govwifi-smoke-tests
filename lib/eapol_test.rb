@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# EapolTest.create(ssid: "GovWifi", identity: "rmygfc", password: "RubyTapWave") { |t| t.execute("1DDA03BD0710FC6D6C25", "52.56.58.4") }
-
 require "erb"
 
 class EapolTest

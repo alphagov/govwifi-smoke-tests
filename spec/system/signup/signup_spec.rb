@@ -20,7 +20,7 @@ feature "Signup" do
 
     Timeout.timeout(20, nil, "Waited too long for signup email") do
       loop do
-        if message = gmail.read("is:unread to:#{test_email}")
+        if (message = gmail.read("is:unread to:#{test_email}"))
           body = message&.payload&.parts&.first&.body&.data
           break
         end

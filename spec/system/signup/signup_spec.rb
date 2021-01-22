@@ -1,8 +1,8 @@
 require_relative "../../../lib/google_mail"
 require_relative "../../../lib/eapol_test"
 
-feature "GovWifi" do
-  include_context "govwifi"
+feature "Signup" do
+  include_context "signup"
 
   it "signs up successfully" do
     gmail = GoogleMail.new

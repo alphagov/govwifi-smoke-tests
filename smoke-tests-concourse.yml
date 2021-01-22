@@ -2,31 +2,77 @@
 
 resources:
 - name: ecr-govwifi-reg
-  type: docker-image
+  type: registry-image
   source:
-    AWS_ACCESS_KEY_ID: "((deploy-access-key-id))"
-    AWS_SECRET_ACCESS_KEY: "((deploy-secret-access-key))"
-    AWS_DEFAULT_REGION: "((deploy-region))"
-    repository: "((deploy-repository))"
+    aws_access_key_id: "((deploy-access-key-id))"
+    aws_secret_access_key: "((deploy-secret-access-key))"
+    aws_region: "((deploy-region))"
+    repository: "govwifi/smoke-tests"
 
 - name: git-repo
   type: git
   source:
-    uri: alphagov/govwifi-smoke-tests
-    branch: master
+    uri: https://github.com/alphagov/govwifi-smoke-tests.git
+    branch: main
+
+- name: interval-60m
+  type: time
+  source:
+    interval: 60m
 
 jobs:
 - name: push-to-ecr
   plan:
   - get: git-repo
+
+  - task: build
+    privileged: true
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: vito/oci-build-task
+
+      inputs:
+      - name: git-repo
+        path: .
+
+      outputs:
+      - name: image
+
+      run:
+        path: build
+
   - put: ecr-govwifi-reg
     params:
-      build: ./git-repo
-      tag_file: ./project-release/tag
-      GW_USER: "((GW_USER))"
-      GW_PASS: "((GW_PASS))"
-      GW_: "((GW_2FA_SECRET))"
-      GOOGLE_API_CREDENTIALS: "((GOOGLE_API_CREDENTIALS))"
-      GOOGLE_API_TOKEN_DATA: "((GOOGLE_API_TOKEN_DATA))"
-      RADIUS_KEY: "((RADIUS_KEY))"
-      RADIUS_IPS: "((RADIUS_IPS))"
+      image: image/image.tar
+
+- name: run-tests
+  plan:
+  - get: interval-60m
+    trigger: true
+  - task: build
+    privileged: true
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          aws_access_key_id: "((deploy-access-key-id))"
+          aws_secret_access_key: "((deploy-secret-access-key))"
+          aws_region: "((deploy-region))"
+          repository: "govwifi/smoke-tests"
+      run:
+        path: bundle
+        args: ["exec", "rspec"]
+        dir: ../../../usr/src/app
+      params:
+        DOCKER: docker
+        GW_USER: "((GW_USER))"
+        GW_PASS: "((GW_PASS))"
+        GW_2FA_SECRET: "((GW_2FA_SECRET))"
+        GOOGLE_API_CREDENTIALS: "((GOOGLE_API_CREDENTIALS))"
+        GOOGLE_API_TOKEN_DATA: "((GOOGLE_API_TOKEN_DATA))"
+        RADIUS_KEY: "((RADIUS_KEY))"
+        RADIUS_IPS: "((RADIUS_IPS))"

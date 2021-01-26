@@ -9,7 +9,7 @@ feature "Signup" do
 
     test_email = gmail.account_email.gsub(/@/, "+#{Time.now.to_i}@")
 
-    gmail.send(
+    gmail.send_email(
       "signup@wifi.service.gov.uk",
       test_email,
       "",
@@ -30,8 +30,8 @@ feature "Signup" do
       end
     end
 
-    identity = body.scan(/Your username: ([a-z]+)/)&.first&.first
-    password = body.scan(/Your password: ([a-zA-Z]+)/)&.first&.first
+    identity = body.scan(/Your username: ([a-z]{6})/)&.first&.first
+    password = body.scan(/Your password: ((?:[A-Z][a-z]+){3})/)&.first&.first
 
     expect(identity).to be
     expect(password).to be

@@ -18,36 +18,16 @@ class GoogleMail
     @service.authorization = authorize
   end
 
-  def authorize
-    client_id = Google::Auth::ClientId.from_hash JSON.parse(ENV["GOOGLE_API_CREDENTIALS"])
-    token_store = EnvTokenStore.new ENV
-    authorizer = Google::Auth::UserAuthorizer.new client_id, SCOPE, token_store
-    user_id = "default"
-    credentials = authorizer.get_credentials user_id
-    if credentials.nil?
-      url = authorizer.get_authorization_url base_url: OOB_URI
-      puts "Open the following URL in the browser and enter the " \
-           "resulting code after authorization:\n" + url
-      code = gets
-      credentials = authorizer.get_and_store_credentials_from_code(
-        user_id: user_id,
-        code: code,
-        base_url: OOB_URI,
-      )
-    end
-    credentials
-  end
-
   def read(query = "")
     messages = @service.list_user_messages("me", q: query).messages
-    if messages
-      message = @service.get_user_message("me", messages[0].id)
-      @service.modify_message("me", message.id, Google::Apis::GmailV1::ModifyMessageRequest.new(remove_label_ids: %w[UNREAD]))
-      message
-    end
+    return if messages.nil?
+
+    message = @service.get_user_message("me", messages[0].id)
+    @service.modify_message("me", message.id, Google::Apis::GmailV1::ModifyMessageRequest.new(remove_label_ids: %w[UNREAD]))
+    message
   end
 
-  def send(to, from, subject, body)
+  def send_email(to, from, subject, body)
     message = Google::Apis::GmailV1::Message.new
     message.raw = [
       "From: #{from}",
@@ -61,5 +41,29 @@ class GoogleMail
 
   def account_email
     @service.get_user_profile("me").email_address
+  end
+
+private
+
+  def authorize
+    client_id = Google::Auth::ClientId.from_hash JSON.parse(ENV["GOOGLE_API_CREDENTIALS"])
+    token_store = EnvTokenStore.new ENV
+    authorizer = Google::Auth::UserAuthorizer.new client_id, SCOPE, token_store
+    user_id = "default"
+    credentials = authorizer.get_credentials user_id
+
+    return credentials unless credentials.nil?
+
+    url = authorizer.get_authorization_url base_url: OOB_URI
+    puts "Open the following URL in the browser and enter the " \
+        "resulting code after authorization:\n" + url
+    code = gets
+    credentials = authorizer.get_and_store_credentials_from_code(
+      user_id: user_id,
+      code: code,
+      base_url: OOB_URI,
+    )
+
+    credentials
   end
 end

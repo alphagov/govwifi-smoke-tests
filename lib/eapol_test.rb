@@ -5,7 +5,7 @@ require "erb"
 class EapolTest
   TEMPLATE_PATH = File.dirname(__FILE__) + "/peap-mschapv2.conf.erb"
 
-  def self.create(*args)
+  def self.make_test(*args)
     eapol_test = new(*args)
     result = yield eapol_test
     eapol_test.close

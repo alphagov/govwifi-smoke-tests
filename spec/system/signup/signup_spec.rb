@@ -38,7 +38,7 @@ feature "Signup" do
 
     radius_ips = ENV["RADIUS_IPS"].split(",")
 
-    radius_ips_successful = EapolTest.create(ssid: "GovWifi", identity: identity, password: password) do |eapol_test|
+    radius_ips_successful = EapolTest.make_test(ssid: "GovWifi", identity: identity, password: password) do |eapol_test|
       radius_ips.select do |radius_ip|
         eapol_test.execute(ENV["RADIUS_KEY"], radius_ip)
       end

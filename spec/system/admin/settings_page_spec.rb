@@ -38,7 +38,7 @@ feature "Settings Page" do
     end
 
     it "shows three dublin servers" do
-      within(".leftnav") {  click_link "Settings" }
+      within(".leftnav") { click_link "Settings" }
 
       expect(page).to have_css("#dublin-radius-ips .ip-address", count: 3)
     end

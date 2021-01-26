@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 group :test do
   gem "capybara"
+  gem "google-api-client"
   gem "rotp"
   gem "rspec"
   gem "rubocop-govuk"

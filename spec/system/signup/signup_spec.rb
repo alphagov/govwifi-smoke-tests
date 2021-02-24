@@ -42,7 +42,7 @@ feature "Signup" do
       Time.new(time_now.year, time_now.month, time_now.day, 1, 15, 0),
     )
 
-    if radius_server_reboot_scheduled
+    unless radius_server_reboot_scheduled
       radius_ips = ENV["RADIUS_IPS"].split(",")
 
       radius_ips_successful = EapolTest.make_test(ssid: "GovWifi", identity: identity, password: password) do |eapol_test|

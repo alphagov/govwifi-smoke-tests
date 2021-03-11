@@ -3,7 +3,7 @@ feature "Team Page" do
 
   it "has the expected content" do
     within(".leftnav") { click_link "Team members" }
-    expect(page).to have_xpath "//h1[text()='Team members']"
+    expect(page).to have_xpath("//h1[text()='Team members']"), content_error(page)
   end
 
   describe "Managing Team members", order: :defined do
@@ -20,12 +20,12 @@ feature "Team Page" do
       fill_in "user[email]", with: test_email
       click_button "Send invitation email"
 
-      expect(page).to have_content "#{test_email} has been invited to join"
+      expect(page).to have_content("#{test_email} has been invited to join"), content_error(page)
     end
 
     it "shows the expected information on overview page" do
       visit "/overview"
-      expect(find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count + 1)
+      expect(find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count + 1), content_error(page)
     end
 
     it "removes a team member" do
@@ -35,12 +35,12 @@ feature "Team Page" do
       click_link "Remove user from GovWifi admin"
       click_button "Yes, remove this team member"
 
-      expect(page).to have_content "Team member has been removed"
+      expect(page).to have_content("Team member has been removed"), content_error(page)
     end
 
     it "shows the expected information on overview page" do
       visit "/overview"
-      expect(find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count)
+      expect(find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count), content_error(page)
     end
   end
 end

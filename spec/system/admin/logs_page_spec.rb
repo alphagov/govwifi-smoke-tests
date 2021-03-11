@@ -3,7 +3,7 @@ feature "Logs Page" do
 
   it "has the expected content" do
     within(".leftnav") { click_link "Logs" }
-    expect(page).to have_content "Logs are kept for recent authentication requests made to the GovWifi service."
+    expect(page).to have_content("Logs are kept for recent authentication requests made to the GovWifi service."), content_error(page)
   end
 
   describe "Search" do
@@ -22,7 +22,7 @@ feature "Logs Page" do
       fill_in "logs_search_search_term", with: "qwert"
       click_button "Show logs"
 
-      expect(page).to have_content "The username \"qwert\" is not reaching the GovWifi service"
+      expect(page).to have_content("The username \"qwert\" is not reaching the GovWifi service"), content_error(page)
     end
   end
 end

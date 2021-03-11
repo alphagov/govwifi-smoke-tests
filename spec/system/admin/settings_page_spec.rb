@@ -16,7 +16,7 @@ feature "Settings Page" do
     it "changes the user's password" do
       change_password ENV["GW_PASS"], new_password
 
-      expect(page).to have_content "Your account has been updated successfully."
+      expect(page).to have_content("Your account has been updated successfully."), content_error(page)
     end
 
     it "logs in with the new password" do
@@ -24,7 +24,7 @@ feature "Settings Page" do
       login(new_password)
       visit "/overview"
 
-      expect(page).to have_xpath "//h2[text()='Overview']"
+      expect(page).to have_xpath("//h2[text()='Overview']"), content_error(page)
 
       change_password new_password, ENV["GW_PASS"]
     end
@@ -34,13 +34,13 @@ feature "Settings Page" do
     it "shows three london servers" do
       within(".leftnav") { click_link "Settings" }
 
-      expect(page).to have_css("#london-radius-ips .ip-address", count: 3)
+      expect(page).to have_css("#london-radius-ips .ip-address", count: 3), content_error(page)
     end
 
     it "shows three dublin servers" do
       within(".leftnav") { click_link "Settings" }
 
-      expect(page).to have_css("#dublin-radius-ips .ip-address", count: 3)
+      expect(page).to have_css("#dublin-radius-ips .ip-address", count: 3), content_error(page)
     end
   end
 end

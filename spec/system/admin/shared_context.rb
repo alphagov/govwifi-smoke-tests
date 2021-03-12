@@ -11,7 +11,11 @@ RSpec.shared_context "admin", shared_context: :metadata do
     click_button("accept-cookies") if has_button?("accept-cookies")
   end
 
-  after(:each) do
+  after(:each) do |example|
+    if example.exception
+      warn("\e[35m#{page.body}\e[0m")
+    end
+
     # persist the session
     Capybara.current_session.instance_variable_set(:@touched, false)
   end
@@ -32,9 +36,5 @@ RSpec.shared_context "admin", shared_context: :metadata do
 
   def logout
     click_link "Sign out"
-  end
-
-  def content_error(page)
-    "Expected content missing from body:\n\n#{page.body}"
   end
 end

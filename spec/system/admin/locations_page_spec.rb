@@ -4,7 +4,7 @@ feature "Locations Page" do
   it "has the expected content" do
     within(".leftnav") { click_link "Locations" }
 
-    expect(page).to have_xpath("//h1[text()='Locations']"), content_error(page)
+    expect(page).to have_xpath "//h1[text()='Locations']"
   end
 
   describe "Locations", order: :defined do
@@ -24,7 +24,7 @@ feature "Locations Page" do
       fill_in "location[postcode]", with: postcode
       click_button "Add location"
 
-      expect(page).to have_content("Added #{location}, #{postcode}"), content_error(page)
+      expect(page).to have_content "Added #{location}, #{postcode}"
     end
 
     it "adds an IP address" do
@@ -33,14 +33,14 @@ feature "Locations Page" do
       fill_in "location[ips_attributes][0][address]", with: "8.8.8.8"
       click_button "Add IP addresses"
 
-      expect(page).to have_content("Added 1 IP address to #{location}, #{postcode}"), content_error(page)
+      expect(page).to have_content("Added 1 IP address to #{location}, #{postcode}")
     end
 
     it "shows the expected information on overview page" do
       visit "/overview"
 
-      expect(find(:xpath, "//h1[@id='locations-count']")["innerText"].to_i).to be(@locations_count + 1), content_error(page)
-      expect(find(:xpath, "//h1[@id='ips-count']")["innerText"].to_i).to be(@ips_count + 1), content_error(page)
+      expect(find(:xpath, "//h1[@id='locations-count']")["innerText"].to_i).to be(@locations_count + 1)
+      expect(find(:xpath, "//h1[@id='ips-count']")["innerText"].to_i).to be(@ips_count + 1)
     end
 
     it "deletes an IP address" do
@@ -50,7 +50,7 @@ feature "Locations Page" do
       find(:xpath, "//*[contains(text(), '#{location}, #{postcode}')]/ancestor::table/descendant::a[text()='Remove']").click
       click_button "Remove"
 
-      expect(page).to have_content("Successfully removed IP address 8.8.8.8"), content_error(page)
+      expect(page).to have_content "Successfully removed IP address 8.8.8.8"
     end
 
     it "deletes a location" do
@@ -59,14 +59,14 @@ feature "Locations Page" do
       find(:xpath, "//*[contains(text(), '#{location}, #{postcode}')]/ancestor::table/descendant::a[text()='Remove this location']").click
       click_button "Yes, remove this location"
 
-      expect(page).to have_content("Successfully removed location #{location}"), content_error(page)
+      expect(page).to have_content "Successfully removed location #{location}"
     end
 
     it "shows the expected information on overview page" do
       visit "/overview"
 
-      expect(find(:xpath, "//h1[@id='locations-count']")["innerText"].to_i).to be(@locations_count), content_error(page)
-      expect(find(:xpath, "//h1[@id='ips-count']")["innerText"].to_i).to be(@ips_count), content_error(page)
+      expect(find(:xpath, "//h1[@id='locations-count']")["innerText"].to_i).to be(@locations_count)
+      expect(find(:xpath, "//h1[@id='ips-count']")["innerText"].to_i).to be(@ips_count)
     end
   end
 end

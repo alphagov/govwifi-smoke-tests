@@ -33,8 +33,4 @@ RSpec.shared_context "admin", shared_context: :metadata do
   def logout
     click_link "Sign out"
   end
-
-  def content_error(page)
-    "Expected content missing from body:\n\n#{page.body}"
-  end
 end

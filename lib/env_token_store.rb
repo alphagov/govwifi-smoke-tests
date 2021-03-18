@@ -1,8 +1,21 @@
 require "googleauth/token_store"
+require "json"
 
 class EnvTokenStore < Google::Auth::TokenStore
   def initialize(env)
-    @data = env["GOOGLE_API_TOKEN_DATA"]
+    creds = JSON.parse(env["GOOGLE_API_CREDENTIALS"])
+    token = JSON.parse(env["GOOGLE_API_TOKEN_DATA"])
+
+    url = URI("https://accounts.google.com/o/oauth2/token")
+    response = Net::HTTP.post_form(url, {
+      "refresh_token" => token["refresh_token"],
+      "client_id" => creds["installed"]["client_id"],
+      "client_secret" => creds["installed"]["client_secret"],
+      "grant_type" => "refresh_token",
+    })
+    result = JSON.parse(response.body)
+
+    @data = JSON.parse(env["GOOGLE_API_TOKEN_DATA"]).merge({ "access_token" => result["access_token"] }).to_json
   end
 
   def default

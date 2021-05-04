@@ -8,7 +8,7 @@ RSpec.shared_context "admin", shared_context: :metadata do
 
     login
 
-    click_button("accept-cookies") if has_button?("accept-cookies")
+    click_button("refuse-cookies") if has_button?("refuse-cookies")
   end
 
   after(:each) do |example|

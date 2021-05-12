@@ -9,8 +9,13 @@ feature "Signup" do
 
     test_email = gmail.account_email.gsub(/@/, "+#{Time.now.to_i}@")
 
+    if ENV["STAGING"] 
+      emailaddress="signup@wifi.staging.service.gov.uk"
+    else
+      emailaddress="signup@wifi.service.gov.uk"
+
     gmail.send_email(
-      "signup@wifi.service.gov.uk",
+      emailaddress,
       test_email,
       "",
       "",

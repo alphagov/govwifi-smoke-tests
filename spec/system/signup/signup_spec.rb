@@ -13,6 +13,7 @@ feature "Signup" do
       emailaddress="signup@staging.wifi.service.gov.uk"
     else
       emailaddress="signup@wifi.service.gov.uk"
+    end
 
     gmail.send_email(
       emailaddress,

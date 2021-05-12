@@ -124,6 +124,7 @@ jobs:
         GOOGLE_API_TOKEN_DATA: "((GOOGLE_API_TOKEN_DATA))"
         RADIUS_KEY: "((RADIUS_KEY))"
         RADIUS_IPS: "((RADIUS_IPS))"
+        STAGING: 0
     on_failure:
       put: notify
       params:

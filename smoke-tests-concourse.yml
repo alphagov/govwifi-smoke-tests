@@ -175,8 +175,8 @@ jobs:
       - name: properties
       params:
         DOCKER: docker
-        GW_USER: "((GW_USER))"
-        GW_PASS: "((GW_PASS))"
+        GW_USER: "((STAGING_GW_USER))"
+        GW_PASS: "((STAGING_GW_PASS))"
         GW_2FA_SECRET: "((STAGING_GW_2FA_SECRET))"
         GOOGLE_API_CREDENTIALS: "((GOOGLE_API_CREDENTIALS))"
         GOOGLE_API_TOKEN_DATA: "((GOOGLE_API_TOKEN_DATA))"

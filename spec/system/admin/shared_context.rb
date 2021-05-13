@@ -1,6 +1,6 @@
 RSpec.shared_context "admin", shared_context: :metadata do
   before(:all) do
-    if (ENV["STAGING"] = 1)
+    if ENV["STAGING"]
       Capybara.app_host = "http://admin.staging.wifi.service.gov.uk"
     else
       Capybara.app_host = "http://admin.wifi.service.gov.uk"

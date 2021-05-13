@@ -96,7 +96,7 @@ jobs:
             build_pipeline_name=$(cat metadata/build_pipeline_name)
             build_job_name=$(cat metadata/build_job_name)
             build_name=$(cat metadata/build_name)
-            echo "Smoke Test Failure: $atc_external_url/teams/$build_team_name/pipelines/$build_pipeline_name/jobs/$build_job_name/builds/$build_name" > properties/failure_message
+            echo "Production Smoke Test Failure: $atc_external_url/teams/$build_team_name/pipelines/$build_pipeline_name/jobs/$build_job_name/builds/$build_name" > properties/failure_message
 
   - task: build
     privileged: true
@@ -154,7 +154,7 @@ jobs:
             build_pipeline_name=$(cat metadata/build_pipeline_name)
             build_job_name=$(cat metadata/build_job_name)
             build_name=$(cat metadata/build_name)
-            echo "Smoke Test Failure: $atc_external_url/teams/$build_team_name/pipelines/$build_pipeline_name/jobs/$build_job_name/builds/$build_name" > properties/failure_message
+            echo "Staging Smoke Test Failure: $atc_external_url/teams/$build_team_name/pipelines/$build_pipeline_name/jobs/$build_job_name/builds/$build_name" > properties/failure_message
 
   - task: build
     privileged: true

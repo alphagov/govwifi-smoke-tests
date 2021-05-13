@@ -42,6 +42,7 @@ resources:
 
 jobs:
 - name: push-to-ecr
+  max_in_flight: 1
   plan:
   - get: git-repo
 
@@ -69,6 +70,7 @@ jobs:
       image: image/image.tar
 
 - name: run-prod-tests
+  max_in_flight: 1
   plan:
   - get: interval-60m
     trigger: true
@@ -130,6 +132,7 @@ jobs:
         text_file: properties/failure_message
 
 - name: run-staging-tests
+  max_in_flight: 1
   plan:
   - put: metadata
 

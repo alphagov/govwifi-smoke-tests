@@ -36,8 +36,8 @@ feature "Signup" do
       end
     end
 
-    identity = body.scan(/Your username:\n([a-z]{6})/)&.first&.first
-    password = body.scan(/Your password:\n((?:[A-Z][a-z]+){3})/)&.first&.first
+    identity = body.scan(/Your username:\r\n([a-z]{6})/)&.first&.first
+    password = body.scan(/Your password:\r\n((?:[A-Z][a-z]+){3})/)&.first&.first
 
     expect(identity).to be
     expect(password).to be

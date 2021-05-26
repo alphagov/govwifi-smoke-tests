@@ -1,6 +1,7 @@
 name: smoke-tests-spike
-on: [push]
-  branches: [spike_create_github_actions_smoke_test_pipeline]
+on:
+  push:
+    branches: [ spike_create_github_actions_smoke_test_pipeline ]
 jobs:
   run-tests:
     name: Run tests

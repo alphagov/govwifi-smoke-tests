@@ -6,13 +6,16 @@ jobs:
   run-tests:
     name: Run tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: [2.7.x]
     steps:
       - run: echo "run tests job"
       - uses: actions/checkout@v2
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6
+          ruby-version: 2.7
       - name: Install dependencies
         run: bundle install
       - name: Run tests

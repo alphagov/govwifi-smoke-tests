@@ -16,9 +16,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.2
+          super_secret: ${{ secrets.GW_USER }}
       - name: Install dependencies
         run: bundle install
       - name: Run tests
         run: make test
-        with:
-          super_secret: ${{ secrets.GW_USER }}

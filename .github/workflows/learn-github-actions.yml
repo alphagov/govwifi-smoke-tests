@@ -11,6 +11,8 @@ jobs:
         ruby-version: [2.7.x]
     steps:
       - run: echo "run tests job"
+        - with:
+            super_secret: ${{ secrets.GW_USER }}
       - uses: actions/checkout@v2
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -19,6 +21,4 @@ jobs:
       - name: Install dependencies
         run: bundle install
       - name: Run tests
-        with:
-          super_secret: ${{ secrets.GW_USER }}
         run: make test

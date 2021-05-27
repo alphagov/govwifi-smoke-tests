@@ -15,13 +15,8 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 2.7.2
       - name: Install dependencies
         run: bundle install
       - name: Run tests
         run: bundle exec rake
-  push-to-ecr:
-    name: Push to ECR
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "push to ECR job"

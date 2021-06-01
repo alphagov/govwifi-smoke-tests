@@ -6,6 +6,7 @@ jobs:
   run-tests:
     name: Run tests
     runs-on: ubuntu-latest
+    env: staging
     strategy:
       matrix:
         ruby-version: [2.7.x]
@@ -16,7 +17,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.2
-          super_secret: ${{ secrets.GW_USER, secrets.GW_PASS, secrets.GW_2FA_SECRET }}
       - name: Install dependencies
         run: bundle install
       - name: Run tests

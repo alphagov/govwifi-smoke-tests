@@ -19,8 +19,12 @@ jobs:
       - name: Install dependencies
         run: bundle install
       - name: Run tests
-        env: # Set the secret as an input
+        env:
           GW_USER: ${{ secrets.GW_USER }}
           GW_PASS: ${{ secrets.GW_PASS }}
           GW_2FA_SECRET: ${{ secrets.GW_2FA_SECRET }}
+          GOOGLE_API_CREDENTIALS: ${{ secrets.GOOGLE_API_CREDENTIALS }}
+          GOOGLE_API_TOKEN_DATA: ${{ secrets.GOOGLE_API_TOKEN_DATA }}
+          RADIUS_KEY: ${{ secrets.RADIUS_KEY }}
+          RADIUS_IPS: ${{ secrets.RADIUS_IPS }}
         run: make test

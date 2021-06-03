@@ -29,7 +29,7 @@ feature "Locations Page" do
 
     it "adds an IP address" do
       within(".leftnav") { click_link "Locations" }
-      find(:xpath, "//*[contains(text(), '#{location}, #{postcode}')]/ancestor::caption/descendant::a[text()='Add IP addresses']").click
+      find(:xpath, "//*[contains(text(), '#{location}, #{postcode}')]/ancestor::div[@class='result-row']/descendant::a[text()='Add IP addresses']").click
       fill_in "location[ips_attributes][0][address]", with: "8.8.8.8"
       click_button "Add IP addresses"
 
@@ -47,7 +47,7 @@ feature "Locations Page" do
       within(".leftnav") { click_link "Locations" }
 
       # Would prefer to select this by IP, however the additional markup around the IP is making that difficult.
-      find(:xpath, "//*[contains(text(), '#{location}, #{postcode}')]/ancestor::table/descendant::a[text()='Remove']").click
+      find(:xpath, "//*[contains(text(), '#{location}, #{postcode}')]/ancestor::div[@class='result-row']/descendant::a[text()='Remove']").click
       click_button "Remove"
 
       expect(page).to have_content "Successfully removed IP address 8.8.8.8"
@@ -56,7 +56,7 @@ feature "Locations Page" do
     it "deletes a location" do
       within(".leftnav") { click_link "Locations" }
 
-      find(:xpath, "//*[contains(text(), '#{location}, #{postcode}')]/ancestor::table/descendant::a[text()='Remove this location']").click
+      find(:xpath, "//*[contains(text(), '#{location}, #{postcode}')]/ancestor::div[@class='result-row']/descendant::a[text()='Remove this location']").click
       click_button "Yes, remove this location"
 
       expect(page).to have_content "Successfully removed location #{location}"

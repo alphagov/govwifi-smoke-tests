@@ -20,6 +20,7 @@ resources:
     aws_secret_access_key: "((deploy-secret-access-key))"
     aws_region: "((deploy-region))"
     repository: "govwifi/smoke-tests"
+    tag: latest
 
 - name: git-repo
   type: git

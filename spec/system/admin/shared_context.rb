@@ -34,7 +34,7 @@ RSpec.shared_context "admin", shared_context: :metadata do
 
       totp = ROTP::TOTP.new(ENV["GW_2FA_SECRET"])
       fill_in "code", with: totp.now
-      click_button "Authenticate"
+      click_button "Continue"
     end
   end
 

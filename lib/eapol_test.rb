@@ -18,7 +18,7 @@ class EapolTest
   end
 
   def execute(key, server)
-    result = `eapol_test -r0 -t3 -c #{@file.path} -a #{server} -s #{key}`
+    result = `eapol_test -r2 -t9 -c #{@file.path} -a #{server} -s #{key}`
     last_result = result.split("\n").last
     last_result == "SUCCESS"
   end

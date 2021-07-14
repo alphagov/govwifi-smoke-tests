@@ -24,7 +24,7 @@ feature "Settings Page" do
       login(new_password)
       visit "/overview"
 
-      expect(page).to have_xpath "//h2[text()='Overview']"
+      expect(page).to have_xpath "//h1[text()='Overview']"
 
       change_password new_password, ENV["GW_PASS"]
     end

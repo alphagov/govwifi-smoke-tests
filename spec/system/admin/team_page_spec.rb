@@ -25,7 +25,7 @@ feature "Team Page" do
 
     it "shows the expected information on overview page" do
       visit "/overview"
-      expect(find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count + 1)
+      expect(find(:xpath, "//p[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count + 1)
     end
 
     it "removes a team member" do
@@ -40,7 +40,7 @@ feature "Team Page" do
 
     it "shows the expected information on overview page" do
       visit "/overview"
-      expect(find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count)
+      expect(find(:xpath, "//p[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count)
     end
   end
 end

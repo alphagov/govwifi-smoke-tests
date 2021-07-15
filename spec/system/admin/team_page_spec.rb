@@ -9,7 +9,7 @@ feature "Team Page" do
   describe "Managing Team members", order: :defined do
     before(:all) do
       visit "/overview"
-      @team_members_count = find(:xpath, "//h1[@id='team-members-count']")["innerText"].to_i
+      @team_members_count = find(:xpath, "//p[@id='team-members-count']")["innerText"].to_i
     end
 
     let(:test_email) { ENV["GW_USER"].sub("@", "+automated-test@") }

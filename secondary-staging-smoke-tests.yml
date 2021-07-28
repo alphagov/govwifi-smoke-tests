@@ -28,11 +28,6 @@ resources:
     uri: https://github.com/alphagov/govwifi-smoke-tests.git
     branch: main
 
-- name: interval-60m
-  type: time
-  source:
-    interval: 60m
-
 - name: notify
   type: slack-notification
   source:

@@ -1,10 +1,10 @@
 ---
 
 resource_types:
-- name: slack-notification
-  type: docker-image
-  source:
-    repository: cfcommunity/slack-notification-resource
+# - name: slack-notification
+#   type: docker-image
+#   source:
+#     repository: cfcommunity/slack-notification-resource
 
 - name: metadata
   type: docker-image
@@ -26,12 +26,12 @@ resources:
   type: git
   source:
     uri: https://github.com/alphagov/govwifi-smoke-tests.git
-    branch: main
+    branch: add-secondary-staging-smoke-tests-pipeline
 
-- name: notify
-  type: slack-notification
-  source:
-    url: ((slack-webhook))
+# - name: notify
+#   type: slack-notification
+#   source:
+#     url: ((slack-webhook))
 
 - name: metadata
   type: metadata
@@ -119,8 +119,9 @@ jobs:
         GOOGLE_API_TOKEN_DATA: "((GOOGLE_API_TOKEN_DATA))"
         RADIUS_KEY: "((RADIUS_KEY))"
         RADIUS_IPS: "((RADIUS_IPS))"
-        STAGING: 1
-    on_failure:
-      put: notify
-      params:
-        text_file: properties/failure_message
+        DOMAIN: "staging-temp.wifi"
+        STAGING: "1"
+    # on_failure:
+    #   put: notify
+    #   params:
+    #     text_file: properties/failure_message

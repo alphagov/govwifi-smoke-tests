@@ -9,11 +9,21 @@ feature "Signup" do
 
     test_email = gmail.account_email.gsub(/@/, "+#{Time.now.to_i}@")
 
-    if ENV["STAGING"]
-      emailaddress="signup@staging-temp.wifi.service.gov.uk"
-    else
-      emailaddress="signup@wifi.service.gov.uk"
-    end
+    # print "Email domain 1:"
+    # print EMAIL_DOMAIN
+    #
+    # print "Email domain 2:"
+    # print "#{ENV['EMAIL_DOMAIN']}"
+
+    emailaddress = "signup@#{ENV['DOMAIN']}.service.gov.uk"
+    # puts emailaddress
+    # puts ENV['EMAIL_DOMAIN']
+
+    # if ENV["STAGING"]
+    #   emailaddress="signup@staging-temp.wifi.service.gov.uk"
+    # else
+    #   emailaddress="signup@wifi.service.gov.uk"
+    # end
 
     gmail.send_email(
       emailaddress,

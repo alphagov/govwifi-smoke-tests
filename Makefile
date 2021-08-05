@@ -20,6 +20,7 @@ test: build
 		-e RADIUS_KEY \
 		-e RADIUS_IPS \
 		-e STAGING \
+		-e EMAIL_DOMAIN \
 		app bundle exec rspec
 
 stop:

@@ -6,7 +6,7 @@ This is a collection of rspec with Capybara tests, using Firefox to access the l
 Running the tests
 -----------------
 
-The tests run in a headless browser inside a Docker container. You need to provide some environment variables:
+The tests run in a headless browser inside a Docker container. You need to provide some environment. variables:
 
 - `GW_USER` - a email address that can sign in to the admin
 - `GW_PASS` - the associated password

@@ -19,8 +19,7 @@ test: build
 		-e GOOGLE_API_TOKEN_DATA \
 		-e RADIUS_KEY \
 		-e RADIUS_IPS \
-		-e STAGING \
-		-e EMAIL_DOMAIN \
+		-e SUBDOMAIN \
 		app bundle exec rspec
 
 stop:

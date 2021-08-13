@@ -1,10 +1,10 @@
 RSpec.shared_context "admin", shared_context: :metadata do
   before(:all) do
 
-    Capybara.app_host = "http://admin.#{ENV['DOMAIN']}.service.gov.uk"
+    Capybara.app_host = "http://admin.#{ENV['SUBDOMAIN']}.service.gov.uk"
 
-    unless ENV["GW_USER"] && ENV["GW_PASS"] && ENV["GW_2FA_SECRET"]
-      abort "\e[31mMust define GW_USER, GW_PASS, and GW_2FA_SECRET\e[0m"
+    unless ENV["GW_USER"] && ENV["GW_PASS"] && ENV["GW_2FA_SECRET"] && ENV["SUBDOMAIN"]
+      abort "\e[31mMust define GW_USER, GW_PASS, SUBDOMAIN and GW_2FA_SECRET\e[0m"
     end
 
     login

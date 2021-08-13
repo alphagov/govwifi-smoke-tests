@@ -6,11 +6,12 @@ This is a collection of rspec with Capybara tests, using Firefox to access the l
 Running the tests
 -----------------
 
-The tests run in a headless browser inside a Docker container. You need to provide some environment. variables:
+The tests run in a headless browser inside a Docker container. You need to provide some environment variables:
 
 - `GW_USER` - a email address that can sign in to the admin
 - `GW_PASS` - the associated password
 - `GW_2FA_SECRET` - the secret contained in the QR code when setting up 2FA
+- `SUBDOMAIN` - the subdomain for your particular environment e.g. `wifi` or `staging.wifi`
 
 Particularly when running in an automated remote way, these credentials should be for a dummy organisation/account, with limited access.
 

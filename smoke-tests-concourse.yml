@@ -136,6 +136,9 @@ jobs:
 - name: run-staging-tests
   max_in_flight: 1
   plan:
+  - get: interval-60m
+    trigger: true
+
   - put: metadata
 
   - task: get-failure-message
@@ -168,69 +171,6 @@ jobs:
       image_resource:
         type: registry-image
         source:
-          aws_access_key_id: "((deploy-access-key-id))"
-          aws_secret_access_key: "((deploy-secret-access-key))"
-          aws_region: "((deploy-region))"
-          repository: "govwifi/smoke-tests"
-      run:
-        path: bundle
-        args: ["exec", "rspec"]
-        dir: ../../../usr/src/app
-      inputs:
-      - name: properties
-      params:
-        DOCKER: docker
-        GW_USER: "((STAGING_GW_USER))"
-        GW_PASS: "((STAGING_GW_PASS))"
-        GW_2FA_SECRET: "((STAGING_GW_2FA_SECRET))"
-        GOOGLE_API_CREDENTIALS: "((GOOGLE_API_CREDENTIALS))"
-        GOOGLE_API_TOKEN_DATA: "((GOOGLE_API_TOKEN_DATA))"
-        RADIUS_KEY: "((STAGING_RADIUS_KEY))"
-        RADIUS_IPS: "((STAGING_RADIUS_IPS))"
-        SUBDOMAIN: "staging.wifi"
-    on_failure:
-      put: notify
-      params:
-        text_file: properties/failure_message
-
-- name: run-secondary-staging-tests
-  max_in_flight: 1
-  plan:
-  - get: interval-60m
-    trigger: true
-
-  - put: metadata
-
-  - task: get-failure-message
-    config:
-      platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          repository: busybox
-      inputs:
-        - name: metadata
-      outputs:
-        - name: properties
-      run:
-        path: sh
-        args:
-          - -exc
-          - |
-            atc_external_url=$(cat metadata/atc_external_url)
-            build_team_name=$(cat metadata/build_team_name)
-            build_pipeline_name=$(cat metadata/build_pipeline_name)
-            build_job_name=$(cat metadata/build_job_name)
-            build_name=$(cat metadata/build_name)
-            echo "Secondary Staging Smoke Test Failure: $atc_external_url/teams/$build_team_name/pipelines/$build_pipeline_name/jobs/$build_job_name/builds/$build_name" > properties/failure_message
-
-  - task: build
-    privileged: true
-    config:
-      platform: linux
-      image_resource:
-        type: registry-image
-        source:
           aws_access_key_id: "((secondary-staging-deploy-access-key-id))"
           aws_secret_access_key: "((secondary-staging-deploy-secret-access-key))"
           aws_region: "((deploy-region))"
@@ -251,7 +191,3 @@ jobs:
         RADIUS_KEY: "((SECONDARY_STAGING_RADIUS_KEY))"
         RADIUS_IPS: "((SECONDARY_STAGING_RADIUS_IPS))"
         SUBDOMAIN: "staging-temp.wifi"
-    # on_failure:
-    #   put: notify
-    #   params:
-    #     text_file: properties/failure_message

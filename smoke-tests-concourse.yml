@@ -42,6 +42,14 @@ resources:
   type: metadata
 
 jobs:
+- name: self-update
+  serial: true
+  plan:
+    - get: git-repo
+      trigger: true
+    - set_pipeline: smoke-tests
+      file: git-repo/smoke-tests-concourse.yml
+
 - name: push-to-ecr
   max_in_flight: 1
   plan:

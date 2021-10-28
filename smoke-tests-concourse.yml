@@ -46,6 +46,7 @@ jobs:
   max_in_flight: 1
   plan:
   - get: git-repo
+    trigger: true
 
   - task: build
     privileged: true

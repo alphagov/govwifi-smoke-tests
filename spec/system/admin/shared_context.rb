@@ -8,6 +8,7 @@ RSpec.shared_context "admin", shared_context: :metadata do
     end
 
     it "can login" do
+      puts Capybara.app_host
       login
     end
 

@@ -7,7 +7,9 @@ RSpec.shared_context "admin", shared_context: :metadata do
       abort "\e[31mMust define GW_USER, GW_PASS, SUBDOMAIN and GW_2FA_SECRET\e[0m"
     end
 
-    login
+    it "can login" do
+      login
+    end
 
     click_button("refuse-cookies") if has_button?("refuse-cookies")
   end

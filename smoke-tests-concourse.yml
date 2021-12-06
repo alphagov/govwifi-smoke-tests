@@ -199,4 +199,4 @@ jobs:
         GOOGLE_API_TOKEN_DATA: "((GOOGLE_API_TOKEN_DATA))"
         RADIUS_KEY: "((SECONDARY_STAGING_RADIUS_KEY))"
         RADIUS_IPS: "((SECONDARY_STAGING_RADIUS_IPS))"
-        SUBDOMAIN: "staging-temp.wifi"
+        SUBDOMAIN: "staging.wifi"

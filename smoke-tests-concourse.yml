@@ -180,8 +180,8 @@ jobs:
       image_resource:
         type: registry-image
         source:
-          aws_access_key_id: "((secondary-staging-deploy-access-key-id))"
-          aws_secret_access_key: "((secondary-staging-deploy-secret-access-key))"
+          aws_access_key_id: "((deploy-access-key-id))"
+          aws_secret_access_key: "((deploy-secret-access-key))"
           aws_region: "((deploy-region))"
           repository: "govwifi/smoke-tests"
       run:

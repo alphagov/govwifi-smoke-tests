@@ -7,11 +7,6 @@ feature "Team Page" do
   end
 
   describe "Managing Team members", order: :defined do
-    before(:all) do
-      visit "/overview"
-      @team_members_count = find(:xpath, "//p[@id='team-members-count']")["innerText"].to_i
-    end
-
     let(:test_email) { ENV["GW_USER"].sub("@", "+automated-test@") }
 
     it "adds a team member" do
@@ -23,11 +18,6 @@ feature "Team Page" do
       expect(page).to have_content "#{test_email} has been invited to join"
     end
 
-    it "shows the expected information on overview page" do
-      visit "/overview"
-      expect(find(:xpath, "//p[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count + 1)
-    end
-
     it "removes a team member" do
       within(".leftnav") { click_link "Team members" }
 
@@ -36,11 +26,6 @@ feature "Team Page" do
       click_button "Yes, remove this team member"
 
       expect(page).to have_content "Team member has been removed"
-    end
-
-    it "shows the expected information on overview page" do
-      visit "/overview"
-      expect(find(:xpath, "//p[@id='team-members-count']")["innerText"].to_i).to be(@team_members_count)
     end
   end
 end

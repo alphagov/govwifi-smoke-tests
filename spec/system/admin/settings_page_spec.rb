@@ -22,9 +22,8 @@ feature "Settings Page" do
     it "logs in with the new password" do
       logout
       login(new_password)
-      visit "/overview"
 
-      expect(page).to have_xpath "//h1[text()='Overview']"
+      expect(page).to have_xpath "//h1[text()='Locations']"
 
       change_password new_password, ENV["GW_PASS"]
     end

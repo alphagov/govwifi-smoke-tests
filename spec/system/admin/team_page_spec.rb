@@ -21,7 +21,7 @@ feature "Team Page" do
     it "removes a team member" do
       within(".leftnav") { click_link "Team members" }
 
-      find(:xpath, "//*[contains(text(), '#{test_email} (invited)')]/ancestor::dd/descendant::a[contains(text(), 'Edit permissions')]").click
+      find(:xpath, "//*[contains(text(), '#{test_email}')]/ancestor::dd/descendant::a[contains(text(), 'Edit permissions')]").click
       click_link "Remove user from GovWifi admin"
       click_button "Yes, remove this team member"
 

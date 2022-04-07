@@ -11,9 +11,7 @@ feature "Logs Page" do
       within(".leftnav") { click_link "Logs" }
       choose "Username", visible: false # Styling means the underlying radio is hidden.
 
-      click_button "Go to search"
-
-      fill_in "logs_search_search_term", with: "qwert"
+      fill_in "Enter username", with: "qwert"
       click_button "Show logs"
       expect(page).to have_content "The username \"qwert\" is not reaching the GovWifi service"
     end

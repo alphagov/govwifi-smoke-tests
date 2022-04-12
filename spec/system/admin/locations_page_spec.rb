@@ -24,7 +24,7 @@ feature "Locations Page" do
     it "adds an IP address" do
       within(".leftnav") { click_link "Locations" }
       find(:xpath, "//*[contains(text(), '#{location}, #{postcode}')]/ancestor::div[@class='result-row']/descendant::a[contains(text(), 'Add IP addresses')]").click
-      fill_in "location[ips_attributes][0][address]", with: "8.8.8.8"
+      fill_in "IP address 1", with: "8.8.8.8"
       click_button "Add IP addresses"
 
       expect(page).to have_content("Added 1 IP address to #{location}, #{postcode}")
@@ -33,8 +33,7 @@ feature "Locations Page" do
     it "deletes an IP address" do
       within(".leftnav") { click_link "Locations" }
 
-      # Would prefer to select this by IP, however the additional markup around the IP is making that difficult.
-      find(:xpath, "//*[contains(text(), '#{location}, #{postcode}')]/ancestor::div[@class='result-row']/descendant::a[contains(text(), 'Remove')]").click
+      find(:xpath, "//th[normalize-space(text()) = '8.8.8.8']/following-sibling::td[2]//a").click
       click_button "Remove"
 
       expect(page).to have_content "Successfully removed IP address 8.8.8.8"

@@ -25,8 +25,8 @@ RSpec.shared_context "admin", shared_context: :metadata do
     visit "/"
 
     if page.current_path == "/users/sign_in"
-      fill_in "user[email]", with: ENV["GW_USER"]
-      fill_in "user[password]", with: password
+      fill_in "Email", with: ENV["GW_USER"]
+      fill_in "Password", with: password
       click_button "Continue"
 
       totp = ROTP::TOTP.new(ENV["GW_2FA_SECRET"])

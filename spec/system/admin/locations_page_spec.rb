@@ -14,8 +14,8 @@ feature "Locations Page" do
     it "adds a location" do
       within(".leftnav") { click_link "Locations" }
       click_link "Add a location"
-      fill_in "location[address]", with: location
-      fill_in "location[postcode]", with: postcode
+      fill_in "Address", with: location
+      fill_in "Postcode", with: postcode
       click_button "Add location"
 
       expect(page).to have_content "Added #{location}, #{postcode}"

@@ -20,6 +20,11 @@ class EapolTest
   def execute(key, server)
     result = `eapol_test -r2 -t9 -c #{@file.path} -a #{server} -s #{key}`
     last_result = result.split("\n").last
+
+    unless last_result == "SUCCESS"
+      STDERR.puts result
+    end
+
     last_result == "SUCCESS"
   end
 

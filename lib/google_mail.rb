@@ -4,7 +4,6 @@ require "json"
 require_relative "env_token_store"
 
 class GoogleMail
-  OOB_URI = "urn:ietf:wg:oauth:2.0:oob".freeze
   APPLICATION_NAME = "GovWifi Smoke Tests".freeze
 
   SCOPE = [
@@ -50,20 +49,6 @@ private
     token_store = EnvTokenStore.new ENV
     authorizer = Google::Auth::UserAuthorizer.new client_id, SCOPE, token_store
     user_id = "default"
-    credentials = authorizer.get_credentials user_id
-
-    return credentials unless credentials.nil?
-
-    url = authorizer.get_authorization_url base_url: OOB_URI
-    puts "Open the following URL in the browser and enter the " \
-        "resulting code after authorization:\n" + url
-    code = gets
-    credentials = authorizer.get_and_store_credentials_from_code(
-      user_id: user_id,
-      code: code,
-      base_url: OOB_URI,
-    )
-
-    credentials
+    authorizer.get_credentials user_id
   end
 end

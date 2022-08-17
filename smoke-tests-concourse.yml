@@ -28,10 +28,10 @@ resources:
     uri: https://github.com/alphagov/govwifi-smoke-tests.git
     branch: main
 
-- name: interval-60m
+- name: interval-10m
   type: time
   source:
-    interval: 60m
+    interval: 10m
 
 - name: notify
   type: slack-notification
@@ -82,7 +82,7 @@ jobs:
 - name: run-prod-tests
   max_in_flight: 1
   plan:
-  - get: interval-60m
+  - get: interval-10m
     trigger: true
 
   - put: metadata
@@ -145,7 +145,7 @@ jobs:
 - name: run-staging-tests
   max_in_flight: 1
   plan:
-  - get: interval-60m
+  - get: interval-10m
     trigger: true
 
   - put: metadata

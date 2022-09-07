@@ -13,7 +13,7 @@ feature "Logs Page" do
 
       fill_in "Enter username", with: "qwert"
       click_button "Show logs"
-      expect(page).to have_content "The username \"qwert\" is not reaching the GovWifi service"
+      expect(page).to have_content "We have no record of username \"qwert\" reaching the GovWifi service from your organisation in the last 2 weeks"
     end
   end
 end

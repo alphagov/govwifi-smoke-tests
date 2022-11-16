@@ -9,8 +9,8 @@ class EnvTokenStore < Google::Auth::TokenStore
     url = URI("https://accounts.google.com/o/oauth2/token")
     response = Net::HTTP.post_form(url, {
       "refresh_token" => token["refresh_token"],
-      "client_id" => creds["installed"]["client_id"],
-      "client_secret" => creds["installed"]["client_secret"],
+      "client_id" => creds["web"]["client_id"],
+      "client_secret" => creds["web"]["client_secret"],
       "grant_type" => "refresh_token",
     })
     result = JSON.parse(response.body)

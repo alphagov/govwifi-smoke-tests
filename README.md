@@ -37,3 +37,8 @@ Updating The Google API Token
 -----------------------------
 
 Instructions for updating the [token](https://github.com/alphagov/govwifi-smoke-tests/blob/363d6827e4eb7763003d0d9f4fd4f4288c6fa28a/smoke-tests-concourse.yml#L136) can be found [here](https://docs.google.com/document/d/1uAaho6jRFUyBT4WRFuDN8pfDmHjfYvG6hT_uo4g1pqA/edit#heading=h.2q4zw5lc8jgj)
+
+Running The Smoke Tests In Our Environments
+-------------------------------------------
+
+The smoke tests have now been migrated from Concourse to AWS. Full instructions on how to run and edit the infrastructure around them can be found [here](https://docs.google.com/document/d/1RHNkGxJLr4BPPUlFgqDzCF6mSOXK0Kj2Yfb-GHXXNIA/). You will need to be a member of the GovWifi Team in order to access this guide.

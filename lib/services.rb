@@ -5,7 +5,7 @@ require "eapol_test"
 
 module Services
   def self.notify
-    @notify ||= Notifications::Client.new(ENV["NOTIFY_API_KEY"])
+    @notify ||= Notifications::Client.new(ENV["NOTIFY_SMOKETEST_API_KEY"])
   end
 
   def self.eapol_test

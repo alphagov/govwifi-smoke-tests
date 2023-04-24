@@ -5,6 +5,10 @@ require "erb"
 class EapolTest
   TEMPLATE_PATH = File.dirname(__FILE__) + "/peap-mschapv2.conf.erb"
 
+  def self.run(config_file_path: nil, radius_ip: nil, secret: nil)
+    `eapol_test -r2 -t9 -c #{config_file_path} -a #{radius_ip} -s #{secret}`
+  end
+
   def self.make_test(*args)
     eapol_test = new(*args)
     result = yield eapol_test
@@ -22,7 +26,7 @@ class EapolTest
     last_result = result.split("\n").last
 
     unless last_result == "SUCCESS"
-      STDERR.puts result
+      warn result
     end
 
     last_result == "SUCCESS"

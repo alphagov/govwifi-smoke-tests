@@ -1,4 +1,4 @@
-FROM ruby:2.7.2-alpine
+FROM ruby:3.2.2-alpine3.17
 ARG BUNDLE_INSTALL_CMD
 
 ENV \

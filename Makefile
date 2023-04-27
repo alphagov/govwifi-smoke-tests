@@ -9,7 +9,7 @@ endif
 lint: build
 	$(DOCKER_COMPOSE) run --rm app bundle exec rubocop
 
-test: build
+test: cleanup
 	$(DOCKER_COMPOSE) run --rm \
 		-e DOCKER=docker \
 		-e GW_USER \
@@ -23,7 +23,20 @@ test: build
 		-e RADIUS_KEY \
 		-e RADIUS_IPS \
 		-e SUBDOMAIN \
-		app bundle exec rspec
+		app bundle exec rspec system
+
+cleanup: build
+	$(DOCKER_COMPOSE) run --rm \
+		-e DOCKER=docker \
+		-e SESSION_DB_HOST \
+		-e SESSION_DB_NAME \
+    -e SESSION_DB_USER \
+    -e SESSION_DB_PASS \
+    -e USER_DB_HOST \
+    -e USER_DB_NAME \
+    -e USER_DB_USER \
+    -e USER_DB_PASS \
+		app ruby -I:./lib/cleanup ./lib/cleanup/run_cleanup.rb
 
 stop:
 	$(DOCKER_COMPOSE) down -v

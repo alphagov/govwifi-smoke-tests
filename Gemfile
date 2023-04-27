@@ -5,9 +5,12 @@ source "https://rubygems.org"
 group :test do
   gem "capybara"
   gem "google-api-client"
+  gem "mysql2"
   gem "notifications-ruby-client"
   gem "rotp"
   gem "rspec"
   gem "rubocop-govuk"
   gem "selenium-webdriver"
+  gem "sequel"
+  gem "sqlite3"
 end

@@ -52,6 +52,7 @@ GEM
     minitest (5.14.2)
     multi_json (1.15.0)
     multipart-post (2.1.1)
+    mysql2 (0.5.5)
     nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
@@ -119,11 +120,13 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    sequel (5.67.0)
     signet (0.14.0)
       addressable (~> 2.3)
       faraday (>= 0.17.3, < 2.0)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
+    sqlite3 (1.4.4)
     thread_safe (0.3.6)
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
@@ -139,11 +142,14 @@ PLATFORMS
 DEPENDENCIES
   capybara
   google-api-client
+  mysql2
   notifications-ruby-client
   rotp
   rspec
   rubocop-govuk
   selenium-webdriver
+  sequel
+  sqlite3
 
 RUBY VERSION
    ruby 2.7.2p137

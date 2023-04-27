@@ -4,10 +4,13 @@ source "https://rubygems.org"
 
 group :test do
   gem "capybara"
-  gem "google-api-client"
+  gem "google-apis-gmail_v1"
+  gem "mysql2"
   gem "notifications-ruby-client"
   gem "rotp"
   gem "rspec"
   gem "rubocop-govuk"
   gem "selenium-webdriver"
+  gem "sequel"
+  gem "sqlite3"
 end

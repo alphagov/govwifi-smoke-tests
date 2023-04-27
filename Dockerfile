@@ -8,7 +8,7 @@ ENV \
 WORKDIR /usr/src/app
 
 RUN apk add --no-cache --virtual .build-deps build-base && \
-  apk add --no-cache openssl wpa_supplicant libc6-compat firefox
+  apk add --no-cache firefox-esr openssl wpa_supplicant sqlite-dev mariadb-connector-c-dev libc6-compat firefox
 
 RUN wget -qO - https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux32.tar.gz \
   | tar -zxC /usr/bin

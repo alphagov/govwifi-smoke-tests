@@ -3,6 +3,7 @@ require "json"
 
 class EnvTokenStore < Google::Auth::TokenStore
   def initialize(env)
+    super()
     creds = JSON.parse(env["GOOGLE_API_CREDENTIALS"])
     token = JSON.parse(env["GOOGLE_API_TOKEN_DATA"])
 

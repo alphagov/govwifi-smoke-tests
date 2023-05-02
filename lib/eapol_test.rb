@@ -3,10 +3,10 @@
 require "erb"
 
 class EapolTest
-  TEMPLATE_PATH = File.dirname(__FILE__) + "/peap-mschapv2.conf.erb"
+  TEMPLATE_PATH = "#{File.dirname(__FILE__)}/peap-mschapv2.conf.erb".freeze
 
-  def self.make_test(*args)
-    eapol_test = new(*args)
+  def self.make_test(ssid:, identity:, password:)
+    eapol_test = new(ssid:, identity:, password:)
     result = yield eapol_test
     eapol_test.close
     result
@@ -22,7 +22,7 @@ class EapolTest
     last_result = result.split("\n").last
 
     unless last_result == "SUCCESS"
-      STDERR.puts result
+      warn result
     end
 
     last_result == "SUCCESS"
@@ -39,9 +39,9 @@ private
     erb = ERB.new(File.read(EapolTest::TEMPLATE_PATH))
 
     @file.write(erb.result_with_hash(
-                  ssid: ssid,
-                  identity: identity,
-                  password: password,
+                  ssid:,
+                  identity:,
+                  password:,
                 ))
     @file.rewind
   end

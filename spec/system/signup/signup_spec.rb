@@ -20,7 +20,7 @@ feature "Signup" do
 
     body = nil
 
-    from_field = ENV['SUBDOMAIN'] == "wifi" ? "govwifi" : "govwifistaging"
+    from_field = ENV["SUBDOMAIN"] == "wifi" ? "govwifi" : "govwifistaging"
     Timeout.timeout(50, nil, "Waited too long for signup email") do
       loop do
         if (message = gmail.read("from:#{from_field}@notifications.service.gov.uk is:unread to:#{test_email}"))
@@ -48,7 +48,7 @@ feature "Signup" do
     unless radius_server_reboot_scheduled
       radius_ips = ENV["RADIUS_IPS"].split(",")
 
-      radius_ips_successful = EapolTest.make_test(ssid: "GovWifi", identity: identity, password: password) do |eapol_test|
+      radius_ips_successful = EapolTest.make_test(ssid: "GovWifi", identity:, password:) do |eapol_test|
         radius_ips.select do |radius_ip|
           eapol_test.execute(ENV["RADIUS_KEY"], radius_ip)
         end

@@ -1,4 +1,4 @@
-FROM ruby:2.7.2-alpine
+FROM ruby:3.2.2-alpine3.17
 ARG BUNDLE_INSTALL_CMD
 
 ENV \
@@ -8,9 +8,9 @@ ENV \
 WORKDIR /usr/src/app
 
 RUN apk add --no-cache --virtual .build-deps build-base && \
-  apk add --no-cache firefox-esr openssl wpa_supplicant
+  apk add --no-cache openssl wpa_supplicant libc6-compat firefox
 
-RUN wget -qO - https://github.com/mozilla/geckodriver/releases/download/v0.28.0/geckodriver-v0.28.0-linux32.tar.gz \
+RUN wget -qO - https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux32.tar.gz \
   | tar -zxC /usr/bin
 
 COPY Gemfile Gemfile.lock .ruby-version ./

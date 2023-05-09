@@ -16,4 +16,5 @@ Capybara.configure do |config|
   config.default_driver = :selenium_headless
 end
 
+Dir["./spec/support/*"].each { |f| puts f; require f }
 Dir["./spec/system/*/shared_context.rb"].sort.each { |f| require f }

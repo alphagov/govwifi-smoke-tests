@@ -26,6 +26,16 @@ stop:
 	$(DOCKER_COMPOSE) down -v
 
 shell: build
-	$(DOCKER_COMPOSE) run --rm app bundle exec sh
+	$(DOCKER_COMPOSE)  run --rm \
+		-e DOCKER=docker \
+		-e GW_USER \
+		-e GW_PASS \
+		-e GW_2FA_SECRET \
+		-e GOOGLE_API_CREDENTIALS \
+		-e GOOGLE_API_TOKEN_DATA \
+		-e RADIUS_KEY \
+		-e RADIUS_IPS \
+		-e SUBDOMAIN \
+		 app bundle exec sh
 
 .PHONY: build stop test shell

@@ -11,10 +11,6 @@ RSpec.configure do |config|
   config.include Capybara::DSL
 end
 
-Capybara.configure do |config|
-  config.run_server = false
-  config.default_driver = :selenium_headless
-end
-
+require "./lib/capybara_config.rb"
 Dir["./spec/support/*"].each { |f| puts f; require f }
 Dir["./spec/system/*/shared_context.rb"].sort.each { |f| require f }

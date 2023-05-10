@@ -1,5 +1,7 @@
 require "capybara/rspec"
 require "rotp"
+Dir["./spec/support/*"].each { |f| puts f; require f }
+Dir["./spec/system/*/shared_context.rb"].sort.each { |f| require f }
 
 RSpec.configure do |config|
   config.filter_run focus: true
@@ -9,8 +11,13 @@ RSpec.configure do |config|
   end
 
   config.include Capybara::DSL
+  config.include AuthenticationHelpers
+  config.include RemoveUserHelper
 end
 
-require "./lib/capybara_config.rb"
-Dir["./spec/support/*"].each { |f| puts f; require f }
-Dir["./spec/system/*/shared_context.rb"].sort.each { |f| require f }
+Capybara.configure do |config|
+  config.run_server = false
+  config.default_driver = :selenium_headless
+end
+
+Capybara.app_host = "http://admin.#{ENV['SUBDOMAIN']}.service.gov.uk"

@@ -12,6 +12,9 @@ lint: build
 test: build
 	$(DOCKER_COMPOSE) run --rm \
 		-e DOCKER=docker \
+		-e GW_ADMIN_USER \
+		-e GW_ADMIN_PASS \
+		-e GW_ADMIN_2FA_SECRET \
 		-e GW_USER \
 		-e GW_PASS \
 		-e GW_2FA_SECRET \
@@ -27,7 +30,12 @@ stop:
 
 shell: build
 	$(DOCKER_COMPOSE)  run --rm \
+		-p 1812:1812/udp \
+		-p 1813:1813/udp \
 		-e DOCKER=docker \
+		-e GW_ADMIN_USER \
+		-e GW_ADMIN_PASS \
+		-e GW_ADMIN_2FA_SECRET \
 		-e GW_USER \
 		-e GW_PASS \
 		-e GW_2FA_SECRET \

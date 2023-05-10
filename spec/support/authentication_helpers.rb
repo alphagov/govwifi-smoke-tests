@@ -1,5 +1,4 @@
-# frozen_string_literal: true
-
+require 'rotp'
 module AuthenticationHelpers
   def login(username:, password:, totp:)
     visit "/"
@@ -16,6 +15,6 @@ module AuthenticationHelpers
   end
 
   def logout
-    click_link "Sign out"
+    click_link "Sign out" if page.has_link?("Sign out")
   end
 end

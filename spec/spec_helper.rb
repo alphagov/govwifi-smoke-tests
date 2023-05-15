@@ -1,5 +1,7 @@
 require "capybara/rspec"
 require "rotp"
+
+Dir["../lib/*"].each { |f| puts f; require f }
 Dir["./spec/support/*"].each { |f| puts f; require f }
 Dir["./spec/system/*/shared_context.rb"].sort.each { |f| require f }
 
@@ -11,7 +13,7 @@ RSpec.configure do |config|
   end
 
   config.include Capybara::DSL
-  config.include AuthenticationHelpers
+  config.include AuthenticationHelper
   config.include RemoveUserHelper
 end
 

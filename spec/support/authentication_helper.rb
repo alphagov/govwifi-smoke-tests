@@ -1,5 +1,5 @@
 require 'rotp'
-module AuthenticationHelpers
+module AuthenticationHelper
   def login(username:, password:, totp:)
     visit "/"
 

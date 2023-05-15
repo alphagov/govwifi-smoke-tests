@@ -1,5 +1,3 @@
-include AuthenticationHelpers
-
 RSpec.shared_context "admin", shared_context: :metadata do
   before(:all) do
     unless ENV["GW_USER"] && ENV["GW_PASS"] && ENV["GW_2FA_SECRET"] && ENV["SUBDOMAIN"]

@@ -23,7 +23,7 @@ test: build
 		-e RADIUS_KEY \
 		-e RADIUS_IPS \
 		-e SUBDOMAIN \
-		app bundle exec rspec
+		app bundle exec rspec spec/system
 
 stop:
 	$(DOCKER_COMPOSE) down -v

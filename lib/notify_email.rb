@@ -1,4 +1,4 @@
-extracrequire_relative "../lib/services"
+require_relative "../lib/services"
 module NotifyEmail
   def parse_message(message:)
     data = message.payload.parts.first.body.data

@@ -39,22 +39,14 @@ feature "Signup" do
     expect(identity).to be
     expect(password).to be
 
-    time_now = Time.now
-    radius_server_reboot_scheduled = time_now.between?(
-      Time.new(time_now.year, time_now.month, time_now.day, 1, 0, 0),
-      Time.new(time_now.year, time_now.month, time_now.day, 1, 15, 0),
-    )
+    radius_ips = ENV["RADIUS_IPS"].split(",")
 
-    unless radius_server_reboot_scheduled
-      radius_ips = ENV["RADIUS_IPS"].split(",")
-
-      radius_ips_successful = EapolTest.make_test(ssid: "GovWifi", identity:, password:) do |eapol_test|
-        radius_ips.select do |radius_ip|
-          eapol_test.execute(ENV["RADIUS_KEY"], radius_ip)
-        end
+    radius_ips_successful = EapolTest.make_test(ssid: "GovWifi", identity:, password:) do |eapol_test|
+      radius_ips.select do |radius_ip|
+        eapol_test.execute(ENV["RADIUS_KEY"], radius_ip)
       end
-
-      expect(radius_ips_successful).to eq radius_ips
     end
+
+    expect(radius_ips_successful).to eq radius_ips
   end
 end

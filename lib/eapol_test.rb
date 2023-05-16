@@ -18,7 +18,7 @@ class EapolTest
   end
 
   def execute(key, server)
-    result = `eapol_test -r2 -t9 -c #{@file.path} -a #{server} -s #{key}`
+    result = Services.eapol_test.run(config_file_path: @file.path, radius_ip: server, secret: key)
     last_result = result.split("\n").last
 
     unless last_result == "SUCCESS"

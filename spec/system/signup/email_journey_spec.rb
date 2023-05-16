@@ -11,8 +11,20 @@ feature "Email Journey" do
     notify_field = ENV["SUBDOMAIN"] == "wifi" ? "govwifi" : "govwifistaging"
     "#{notify_field}@notifications.service.gov.uk"
   end
-  let(:client_address) { from_address.gsub(/@/, "+#{Time.now.to_i}@") }
+  let(:client_address) { from_address }
 
+  before :all do
+    remove_user(user: from_address)
+  end
+  it "has removed the user" do
+    using_session("Admin") do
+      login(username: ENV["GW_SUPER_ADMIN_USER"], password: ENV["GW_SUPER_ADMIN_PASS"], secret: ENV["GW_SUPER_ADMIN_2FA_SECRET"])
+      click_link("User Details")
+      fill_in "Username, email address or phone number", with: from_address
+      click_button "Find user details"
+      expect(page).to have_content("Nothing found")
+    end
+  end
   it "signs up successfully" do
     send_email(from_address: client_address, to_address: signup_address, body: "go")
     message = fetch_reply(from_address: notify_address, to_address: client_address)

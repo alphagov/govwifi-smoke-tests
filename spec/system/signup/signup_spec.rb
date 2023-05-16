@@ -3,6 +3,7 @@ require_relative "../../../lib/eapol_test"
 
 feature "Signup" do
   include_context "signup"
+  include EapolTest
 
   it "signs up successfully" do
     gmail = GoogleMail.new
@@ -39,14 +40,11 @@ feature "Signup" do
     expect(identity).to be
     expect(password).to be
 
-    radius_ips = ENV["RADIUS_IPS"].split(",")
-
-    radius_ips_successful = EapolTest.make_test(ssid: "GovWifi", identity:, password:) do |eapol_test|
-      radius_ips.select do |radius_ip|
-        eapol_test.execute(ENV["RADIUS_KEY"], radius_ip)
-      end
-    end
-
-    expect(radius_ips_successful).to eq radius_ips
+    result = do_eapol_tests(ssid: "GovWifi",
+                            username: identity,
+                            password:,
+                            radius_ips: ENV["RADIUS_IPS"].split(","),
+                            secret: ENV["RADIUS_KEY"])
+    expect(result).to all(be true)
   end
 end

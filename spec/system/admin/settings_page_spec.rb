@@ -21,7 +21,7 @@ feature "Settings Page" do
 
     it "logs in with the new password" do
       logout
-      login(new_password)
+      login(username: ENV["GW_USER"], password: new_password, secret: ENV["GW_2FA_SECRET"])
 
       expect(page).to have_xpath "//h1[text()='Locations']"
 

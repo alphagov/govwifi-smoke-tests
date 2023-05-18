@@ -23,6 +23,10 @@ test: build
 		-e RADIUS_KEY \
 		-e RADIUS_IPS \
 		-e SUBDOMAIN \
+		-e NOTIFY_SMOKETEST_API_KEY \
+		-e NOTIFY_GO_TEMPLATE_ID \
+		-e GOVWIFI_PHONE_NUMBER \
+		-e SMOKETEST_PHONE_NUMBER \
 		app bundle exec rspec spec/system
 
 stop:
@@ -42,6 +46,10 @@ shell: build
 		-e RADIUS_KEY \
 		-e RADIUS_IPS \
 		-e SUBDOMAIN \
-		app bundle exec sh
+		-e NOTIFY_SMOKETEST_API_KEY \
+		-e NOTIFY_GO_TEMPLATE_ID \
+		-e GOVWIFI_PHONE_NUMBER \
+		-e SMOKETEST_PHONE_NUMBER \
+		 app bundle exec sh
 
 .PHONY: build stop test shell

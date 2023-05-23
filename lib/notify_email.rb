@@ -37,11 +37,23 @@ module NotifyEmail
 
   def fetch_reply(from_address:, to_address:, timeout: 50)
     Timeout.timeout(timeout, nil, "Waited too long for signup email") do
-      while (message = read_email(query: "from:#{from_address} subject:Welcome is:unread to:#{to_address}")).nil?
+      while (message = read_email(query: unread_emails_query(from_address:, to_address:))).nil?
         print "."
         sleep 2
       end
       message
     end
+  end
+
+  def set_all_messages_to_read(from_address:, to_address:)
+    messages = Services.gmail.list_user_messages("me", q: unread_emails_query(from_address:, to_address:)).messages || []
+
+    messages.each do |message|
+      set_read_flag(message:)
+    end
+  end
+
+  def unread_emails_query(from_address:, to_address:)
+    "from:#{from_address} subject:Welcome is:unread to:#{to_address}"
   end
 end

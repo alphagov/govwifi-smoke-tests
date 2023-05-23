@@ -26,11 +26,15 @@ feature "Email Journey" do
     end
   end
   it "signs up successfully" do
+    set_all_messages_to_read(from_address: notify_address, to_address: client_address)
     send_email(from_address: client_address, to_address: signup_address, body: "go")
     message = fetch_reply(from_address: notify_address, to_address: client_address)
     set_read_flag(message:)
 
     username, password = parse_message(message:)
+    expect(username).to_not be_nil
+    expect(password).to_not be_nil
+
     result = do_eapol_tests(ssid: "GovWifi",
                             username:,
                             password:,

@@ -35,13 +35,13 @@ describe NotifySms do
     it "returns the first new message even if it is the first one" do
       allow(notify_client).to receive(:get_received_texts).and_return(double(collection: []),
                                                                       double(collection: [new_message]))
-      expect(read_reply_sms(phone_number:, after_id: nil, timeout: 2)).to eq "new_body"
+      expect(read_reply_sms(phone_number:, after_id: nil, timeout: 2, interval: 0)).to eq "new_body"
     end
 
     it "returns the first new message" do
       allow(notify_client).to receive(:get_received_texts).and_return(double(collection: [old_message]),
                                                                       double(collection: [new_message, old_message]))
-      expect(read_reply_sms(phone_number:, after_id: "old_id", timeout: 2)).to eq "new_body"
+      expect(read_reply_sms(phone_number:, after_id: "old_id", timeout: 2, interval: 0)).to eq "new_body"
     end
 
     describe "normalise phone numbers" do
@@ -50,16 +50,16 @@ describe NotifySms do
                                                                         double(collection: [new_message, old_message]))
       end
       it "removes the + from the phone number" do
-        expect(read_reply_sms(phone_number: "+#{phone_number}", after_id: "old_id", timeout: 2)).to eq "new_body"
+        expect(read_reply_sms(phone_number: "+#{phone_number}", after_id: "old_id", timeout: 2, interval: 0)).to eq "new_body"
       end
       it "replaces '0' with '44' if the phone number is not international" do
-        expect(read_reply_sms(phone_number: "07700900000", after_id: "old_id", timeout: 2)).to eq "new_body"
+        expect(read_reply_sms(phone_number: "07700900000", after_id: "old_id", timeout: 2, interval: 0)).to eq "new_body"
       end
     end
 
     it "times out" do
       allow(notify_client).to receive(:get_received_texts).and_return(double(collection: [old_message]))
-      expect { read_reply_sms(phone_number:, after_id: "old_id", timeout: 2) }.to raise_error(Timeout::Error)
+      expect { read_reply_sms(phone_number:, after_id: "old_id", timeout: 2, interval: 0) }.to raise_error(Timeout::Error)
     end
   end
 
@@ -85,7 +85,7 @@ describe NotifySms do
 
         Go to your wifi settings, select 'GovWifi' and enter your details.
       HTML
-      expect(parse_message(message)).to eq %w[abcdef DogCatFox]
+      expect(parse_sms_message(message:)).to eq %w[abcdef DogCatFox]
     end
   end
 end

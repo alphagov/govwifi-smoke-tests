@@ -12,7 +12,7 @@ feature "SMS Journey" do
     id = get_first_sms(phone_number: ENV["GOVWIFI_PHONE_NUMBER"])&.id
     send_go_message(phone_number: ENV["GOVWIFI_PHONE_NUMBER"], template_id: ENV["NOTIFY_GO_TEMPLATE_ID"])
     message = read_reply_sms(phone_number: ENV["GOVWIFI_PHONE_NUMBER"], after_id: id)
-    username, password = parse_message message
+    username, password = parse_sms_message(message:)
     result = do_eapol_tests(ssid: "GovWifi",
                             username:,
                             password:,

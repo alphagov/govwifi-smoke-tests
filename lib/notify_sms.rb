@@ -9,7 +9,7 @@ module NotifySms
 
   def read_reply_sms(phone_number:, after_id:, timeout: 120)
     Timeout.timeout(timeout, nil, "Waited too long for signup SMS. Last received SMS is #{after_id}") do
-      normalised_phone_number = normalise(phone_number)
+      normalised_phone_number = normalise(phone_number:)
       while (result = get_first_sms(phone_number: normalised_phone_number))&.id == after_id
         print "."
         sleep 5
@@ -19,7 +19,7 @@ module NotifySms
   end
 
   def get_first_sms(phone_number:)
-    Services.notify.get_received_texts.collection.find { |message| message.user_number == normalise(phone_number) }
+    Services.notify.get_received_texts.collection.find { |message| message.user_number == normalise(phone_number:) }
   end
 
   def parse_message(message)
@@ -27,9 +27,7 @@ module NotifySms
     [match[:username], match[:password]]
   end
 
-private
-
-  def normalise(phone_number)
+  def normalise(phone_number:)
     phone_number.delete("+").sub(/^0/, "44")
   end
 end

@@ -29,15 +29,9 @@ module NotifyEmail
     Services.gmail.get_user_message("me", messages[0].id)
   end
 
-  def set_read_flag(message:)
-    Services.gmail.modify_message("me",
-                                  message.id,
-                                  Google::Apis::GmailV1::ModifyMessageRequest.new(remove_label_ids: %w[UNREAD]))
-  end
-
-  def fetch_reply(from_address:, to_address:, timeout: 50)
+  def fetch_reply(query:, timeout: 50)
     Timeout.timeout(timeout, nil, "Waited too long for signup email") do
-      while (message = read_email(query: unread_emails_query(from_address:, to_address:))).nil?
+      while (message = read_email(query:)).nil?
         print "."
         sleep 2
       end
@@ -45,15 +39,13 @@ module NotifyEmail
     end
   end
 
-  def set_all_messages_to_read(from_address:, to_address:)
-    messages = Services.gmail.list_user_messages("me", q: unread_emails_query(from_address:, to_address:)).messages || []
+  def set_all_messages_to_read(query:)
+    messages = Services.gmail.list_user_messages("me", q: query).messages || []
 
     messages.each do |message|
-      set_read_flag(message:)
+      Services.gmail.modify_message("me",
+                                    message.id,
+                                    Google::Apis::GmailV1::ModifyMessageRequest.new(remove_label_ids: %w[UNREAD]))
     end
-  end
-
-  def unread_emails_query(from_address:, to_address:)
-    "from:#{from_address} subject:Welcome is:unread to:#{to_address}"
   end
 end

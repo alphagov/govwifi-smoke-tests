@@ -36,10 +36,10 @@ feature "Email Journey" do
     expect(password).to_not be_nil
 
     radius_outcomes = do_eapol_tests(ssid: "GovWifi",
-                            username:,
-                            password:,
-                            radius_ips: ENV["RADIUS_IPS"].split(","),
-                            secret: ENV["RADIUS_KEY"])
+                                     username:,
+                                     password:,
+                                     radius_ips: ENV["RADIUS_IPS"].split(","),
+                                     secret: ENV["RADIUS_KEY"])
     expect(radius_outcomes).to all(be true), "EAPOL tests failed for #{username}, #{password}"
   end
 end

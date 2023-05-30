@@ -85,7 +85,7 @@ describe NotifySms do
 
         Go to your wifi settings, select 'GovWifi' and enter your details.
       HTML
-      expect(parse_message(message)).to eq %w[abcdef DogCatFox]
+      expect(parse_sms_message(message:)).to eq %w[abcdef DogCatFox]
     end
   end
 end

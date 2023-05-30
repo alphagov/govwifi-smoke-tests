@@ -1,6 +1,6 @@
 require_relative "../lib/services"
 module NotifyEmail
-  def parse_message(message:)
+  def parse_email_message(message:)
     data = message.payload.parts.first.body.data
     match = /Your username:[\n\r\s]*(?<username>[a-z]{6})[\n\r\s]*Your password:[\n\r\s]*(?<password>(?:[A-Z][a-z]+){3})/.match(data)
     [match[:username], match[:password]]

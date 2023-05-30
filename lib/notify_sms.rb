@@ -22,7 +22,7 @@ module NotifySms
     Services.notify.get_received_texts.collection.find { |message| message.user_number == normalise(phone_number:) }
   end
 
-  def parse_message(message)
+  def parse_sms_message(message:)
     match = /Username:[\n\r\s]*(?<username>[a-z]{6})[\n\r\s]*Password:[\n\r\s]*(?<password>(?:[A-Z][a-z]+){3})/.match(message)
     [match[:username], match[:password]]
   end

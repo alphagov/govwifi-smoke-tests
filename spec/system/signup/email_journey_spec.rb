@@ -31,7 +31,7 @@ feature "Email Journey" do
     send_email(from_address:, to_address: signup_address, body: "go")
     message = fetch_reply(query:)
 
-    username, password = parse_message(message:)
+    username, password = parse_email_message(message:)
     expect(username).to_not be_nil
     expect(password).to_not be_nil
 

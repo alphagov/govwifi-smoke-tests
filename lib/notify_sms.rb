@@ -7,7 +7,7 @@ module NotifySms
     )
   end
 
-  def read_reply_sms(phone_number:, after_id:, timeout: 120, interval: 5)
+  def read_reply_sms(phone_number:, after_id:, timeout: 300, interval: 5)
     Timeout.timeout(timeout, nil, "Waited too long for signup SMS. Last received SMS is #{after_id}") do
       normalised_phone_number = normalise(phone_number:)
       while (result = get_first_sms(phone_number: normalised_phone_number))&.id == after_id

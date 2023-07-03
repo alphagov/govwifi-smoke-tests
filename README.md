@@ -31,7 +31,7 @@ export GOOGLE_API_CREDENTIALS='{"access_token....}'
 export GOOGLE_API_TOKEN_DATA='{"web":{....}'
 ```
 
-When running the smoke tests, ensure that both the super user and the regular admin user that were defined in the environment varianles exist in the admin app.
+When running the smoke tests, ensure that both the super user and the regular admin user that were defined in the environment variables exist in the admin app.
 Furthermore, ensure that the regular admin user is a member of two organisations, where one of the organisations should be called "Automated Test 2"
 
 You can find the values of the environment variables in AWS secrets manager:

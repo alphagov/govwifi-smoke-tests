@@ -11,7 +11,7 @@ feature "Team Page" do
 
     it "adds a team member" do
       within(".leftnav") { click_link "Team members" }
-      click_link "Invite a team member"
+      find("a", class: "govuk-button", text: "Invite a team member").click
       fill_in "user[email]", with: test_email
       click_button "Send invitation email"
 

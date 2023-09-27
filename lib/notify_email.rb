@@ -29,7 +29,7 @@ module NotifyEmail
     Services.gmail.get_user_message("me", messages[0].id)
   end
 
-  def fetch_reply(query:, timeout: 50)
+  def fetch_reply(query:, timeout: 300)
     Timeout.timeout(timeout, nil, "Waited too long for signup email") do
       while (message = read_email(query:)).nil?
         print "."

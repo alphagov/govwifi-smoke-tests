@@ -10,7 +10,7 @@ feature "Sponsor Journey" do
 
   before :context do
     @signup_address = "sponsor@#{ENV['SUBDOMAIN']}.service.gov.uk"
-    @notify_field = ENV["SUBDOMAIN"] == "wifi" ? "govwifi" : "govwifistaging"
+    @notify_field = "govwifidevelopment" #ENV["SUBDOMAIN"] == "wifi" ? "govwifi" : "govwifistaging"
     @notify_address = "#{@notify_field}@notifications.service.gov.uk"
     @sponsored_email_address = from_address.sub "@", "+sponsored@"
     @sponsor_email_address = from_address

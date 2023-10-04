@@ -1,4 +1,3 @@
-require "logger"
 require_relative "../../../lib/notify_email"
 require_relative "../../../lib/eapol_test"
 require_relative "../../../lib/services"
@@ -7,7 +6,7 @@ feature "Email Journey" do
   include NotifyEmail
   include EapolTest
   
-  logger.debug "sign up env #{ENV['SUBDOMAIN']}"
+  puts "sign up env #{ENV['SUBDOMAIN']}"
   let(:signup_address) { "signup@#{ENV['SUBDOMAIN']}.service.gov.uk" }
   let(:notify_address) do
     notify_field = "govwifidevelopment" #ENV["SUBDOMAIN"] == "wifi" ? "govwifi" : "govwifistaging"

@@ -1,3 +1,4 @@
+require "logger"
 require_relative "../../../lib/notify_email"
 require_relative "../../../lib/eapol_test"
 require_relative "../../../lib/services"

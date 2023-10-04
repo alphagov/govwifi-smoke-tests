@@ -17,7 +17,7 @@ The tests run in a headless browser inside a Docker container. You need to provi
 - `SUBDOMAIN` - the subdomain for your particular environment e.g. `wifi` or `staging.wifi`
 - `GOOGLE_API_CREDENTIALS` - token for the Google API.
 - `GOOGLE_API_TOKEN_DATA` - token for the Google API.
-- `NOTIFY_FIELD` - the notify email prefix, for the given environment, goveifi(development, staging, blank) 
+- `NOTIFY_FIELD` - the notify email prefix, for the given environment, govwifi(development, staging, blank) 
 
 An example of setting the environment variables
 ```

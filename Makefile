@@ -25,6 +25,7 @@ test: build
 		-e NOTIFY_GO_TEMPLATE_ID \
 		-e GOVWIFI_PHONE_NUMBER \
 		-e SMOKETEST_PHONE_NUMBER \
+		-e NOTIFY_FIELD \
 		app bundle exec rspec spec/system
 
 stop:
@@ -48,6 +49,7 @@ shell: build
 		-e NOTIFY_GO_TEMPLATE_ID \
 		-e GOVWIFI_PHONE_NUMBER \
 		-e SMOKETEST_PHONE_NUMBER \
+		-e NOTIFY_FIELD \
 		 app bundle exec sh
 
 .PHONY: build stop test shell

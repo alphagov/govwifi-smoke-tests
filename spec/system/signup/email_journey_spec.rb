@@ -8,8 +8,7 @@ feature "Email Journey" do
 
   let(:signup_address) { "signup@#{ENV['SUBDOMAIN']}.service.gov.uk" }
   let(:notify_address) do
-    notify_field = ENV["SUBDOMAIN"] == "wifi" ? "govwifi" : "govwifistaging"
-    "#{notify_field}@notifications.service.gov.uk"
+    "#{ENV["NOTIFY_FIELD"]}@notifications.service.gov.uk"
   end
 
   before :all do

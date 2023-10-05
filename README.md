@@ -17,6 +17,7 @@ The tests run in a headless browser inside a Docker container. You need to provi
 - `SUBDOMAIN` - the subdomain for your particular environment e.g. `wifi` or `staging.wifi`
 - `GOOGLE_API_CREDENTIALS` - token for the Google API.
 - `GOOGLE_API_TOKEN_DATA` - token for the Google API.
+- `NOTIFY_FIELD` - the notify email prefix, for the given environment, govwifi(development, staging, blank) 
 
 An example of setting the environment variables
 ```
@@ -29,6 +30,7 @@ export GW_SUPER_ADMIN_2FA_SECRET=123
 export SUBDOMAIN=wifi
 export GOOGLE_API_CREDENTIALS='{"access_token....}'
 export GOOGLE_API_TOKEN_DATA='{"web":{....}'
+export NOTIFY_FIELD=govwifidevelopment
 ```
 
 When running the smoke tests, ensure that both the super user and the regular admin user that were defined in the environment variables exist in the admin app.
@@ -43,6 +45,8 @@ You can find the values of the environment variables in AWS secrets manager:
 - `GW_SUPER_ADMIN_2FA_SECRET` - deploy/gw_super_admin_2fa_secret
 - `GOOGLE_API_CREDENTIALS` - deploy/google_api_credentials
 - `GOOGLE_API_TOKEN_DATA` - deploy/google_api_token_data
+
+The NOTIFY_FIELD is set in terraform in the 'smoke_tests' module for each environment.
 
 Then run the tests:
 ```make test```

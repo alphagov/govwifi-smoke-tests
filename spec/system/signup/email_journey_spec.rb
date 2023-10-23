@@ -1,10 +1,8 @@
 require_relative "../../../lib/notify_email"
-require_relative "../../../lib/eapol_test"
 require_relative "../../../lib/services"
 
 feature "Email Journey" do
   include NotifyEmail
-  include EapolTest
 
   let(:signup_address) { "signup@#{ENV['SUBDOMAIN']}.service.gov.uk" }
   let(:notify_address) do
@@ -34,11 +32,12 @@ feature "Email Journey" do
     expect(username).to_not be_nil
     expect(password).to_not be_nil
 
-    radius_outcomes = do_eapol_tests(ssid: "GovWifi",
-                                     username:,
-                                     password:,
-                                     radius_ips: ENV["RADIUS_IPS"].split(","),
-                                     secret: ENV["RADIUS_KEY"])
-    expect(radius_outcomes).to all(be true), "EAPOL tests failed for #{username}, #{password}"
+    eapol_test = GovwifiEapoltest.new(radius_ips: ENV["RADIUS_IPS"].split(","),
+                                      secret: ENV["RADIUS_KEY"])
+
+    output = eapol_test.run_peap_mschapv2(username:,
+                                          password:)
+
+    expect(output).to all have_been_successful
   end
 end

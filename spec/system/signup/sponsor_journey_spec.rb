@@ -1,12 +1,10 @@
 require_relative "../../../lib/notify_email"
 require_relative "../../../lib/notify_sms"
-require_relative "../../../lib/eapol_test"
 require_relative "../../../lib/services"
 
 feature "Sponsor Journey" do
   include NotifyEmail
   include NotifySms
-  include EapolTest
 
   before :context do
     @signup_address = "sponsor@#{ENV['SUBDOMAIN']}.service.gov.uk"
@@ -75,21 +73,21 @@ feature "Sponsor Journey" do
       expect(@sponsor_email_message.payload.parts.first.body.data).to include(@sponsored_email_address)
       expect(@sponsor_email_message.payload.parts.first.body.data).to include(normalise(phone_number: @sponsored_sms_number))
     end
-    it "can successfully connect to Radius using the credentials in the email" do
-      email_radius_outcome = do_eapol_tests(ssid: "GovWifi",
-                                            username: @email_username,
-                                            password: @email_password,
-                                            radius_ips: [ENV["RADIUS_IPS"].split(",").first],
-                                            secret: ENV["RADIUS_KEY"]).first
-      expect(email_radius_outcome).to be(true), "EAPOL tests failed for #{@email_username}, #{@email_password}"
-    end
-    it "can successfully connect to Radius using the credentials in the sms" do
-      email_radius_outcome = do_eapol_tests(ssid: "GovWifi",
-                                            username: @sms_username,
-                                            password: @sms_password,
-                                            radius_ips: [ENV["RADIUS_IPS"].split(",").first],
-                                            secret: ENV["RADIUS_KEY"]).first
-      expect(email_radius_outcome).to be(true), "EAPOL tests failed for #{@sms_username}, #{@sms_password}"
+    describe "connect to FreeRadius" do
+      let(:radius_ips) { [ENV["RADIUS_IPS"].split(",").first] }
+      let(:secret) { ENV["RADIUS_KEY"] }
+      let(:eapol_test) { GovwifiEapoltest.new(radius_ips:, secret:) }
+
+      it "can successfully connect to Radius using the credentials in the email" do
+        output = eapol_test.run_peap_mschapv2(username: @email_username,
+                                              password: @email_password)
+        expect(output).to all have_been_successful
+      end
+      it "can successfully connect to Radius using the credentials in the sms" do
+        output = eapol_test.run_peap_mschapv2(username: @sms_username,
+                                              password: @sms_password)
+        expect(output).to all have_been_successful
+      end
     end
   end
 end

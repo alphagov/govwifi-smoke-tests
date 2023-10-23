@@ -1,4 +1,5 @@
 require "capybara/rspec"
+require "govwifi_eapoltest"
 require "rotp"
 
 Dir["../lib/*"].each { |f| require f }

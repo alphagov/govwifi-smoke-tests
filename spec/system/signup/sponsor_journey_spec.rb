@@ -86,7 +86,7 @@ feature "Sponsor Journey" do
       it "can successfully connect to Radius using the credentials in the sms" do
         output = eapol_test.run_peap_mschapv2(username: @sms_username,
                                               password: @sms_password)
-        expect(output).to all have_been_successful
+        expect(output).to all(have_been_successful), output.join("\n")
       end
     end
   end

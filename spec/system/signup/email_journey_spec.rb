@@ -38,6 +38,6 @@ feature "Email Journey" do
     output = eapol_test.run_peap_mschapv2(username:,
                                           password:)
 
-    expect(output).to all have_been_successful
+    expect(output).to all(have_been_successful), output.join("\n")
   end
 end

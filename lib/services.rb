@@ -1,16 +1,11 @@
 require "google/apis/gmail_v1"
 require "googleauth"
 require "notifications/client"
-require_relative "./eapol_test_client"
 require_relative "./env_token_store"
 
 module Services
   def self.notify
     @notify ||= Notifications::Client.new(ENV["NOTIFY_SMOKETEST_API_KEY"])
-  end
-
-  def self.eapol_test
-    EapolTestClient
   end
 
   def self.gmail

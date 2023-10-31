@@ -1,10 +1,8 @@
-GovWifi Smoke Tests
-===================
+# GovWifi Smoke Tests
 
 This is a collection of rspec with Capybara tests, using Firefox to access the live application.
 
-Running the tests
------------------
+## Running the tests
 
 The tests run in a headless browser inside a Docker container. You need to provide some environment variables:
 
@@ -18,6 +16,12 @@ The tests run in a headless browser inside a Docker container. You need to provi
 - `GOOGLE_API_CREDENTIALS` - token for the Google API.
 - `GOOGLE_API_TOKEN_DATA` - token for the Google API.
 - `NOTIFY_FIELD` - the notify email prefix, for the given environment, govwifi(development, staging, blank) 
+- `RADIUS_KEY` - Key to allow access to radius, this is located in the admin app > org > locations
+- `RADIUS_IPS` - allow list for radius, again located in the admin app > org > locations
+- `NOTIFY_SMOKETEST_API_KEY` - api key for notify, see Notify App.
+- `NOTIFY_GO_TEMPLATE_ID` - Template ID for template, see Notify App.
+- `GOVWIFI_PHONE_NUMBER` -  Phone number for the gov wifi virtual phone
+- `SMOKETEST_PHONE_NUMBER` - gPhone number for the smoke test user virtual phone
 
 An example of setting the environment variables
 ```
@@ -29,8 +33,14 @@ export GW_SUPER_ADMIN_PASS=paswd
 export GW_SUPER_ADMIN_2FA_SECRET=123
 export SUBDOMAIN=wifi
 export GOOGLE_API_CREDENTIALS='{"access_token....}'
-export GOOGLE_API_TOKEN_DATA='{"web":{....}'
+export GOOGLE_API_TOKEN_DATA='{"web":{....}}'
 export NOTIFY_FIELD=govwifidevelopment
+export RADIUS_KEY=abcdefghijklmnopqrstuvwxyz1234567890
+export RADIUS_IPS=1.2.3.4
+export NOTIFY_SMOKETEST_API_KEY=123456abcdefg
+export NOTIFY_GO_TEMPLATE_ID=lakdfjlsdkj323423423
+export GOVWIFI_PHONE_NUMBER=01202123456
+export SMOKETEST_PHONE_NUMBER=01202123456
 ```
 
 When running the smoke tests, ensure that both the super user and the regular admin user that were defined in the environment variables exist in the admin app.
@@ -45,8 +55,15 @@ You can find the values of the environment variables in AWS secrets manager:
 - `GW_SUPER_ADMIN_2FA_SECRET` - deploy/gw_super_admin_2fa_secret
 - `GOOGLE_API_CREDENTIALS` - deploy/google_api_credentials
 - `GOOGLE_API_TOKEN_DATA` - deploy/google_api_token_data
+- `RADIUS_KEY` - deploy/radius_key
+- `RADIUS_IPS` - smoke_tests/radius_ips/london
+- `NOTIFY_SMOKETEST_API_KEY` - smoketests/notify_smoketest_api_key
 
-The NOTIFY_FIELD is set in terraform in the 'smoke_tests' module for each environment.
+These are located in the govwifi-terraform repo
+- `NOTIFY_GO_TEMPLATE_ID` - located in the 'smoke_tests' module, in locals for each environment.
+- `GOVWIFI_PHONE_NUMBER` -  located in the 'govwifi' module for each environment and region
+- `SMOKETEST_PHONE_NUMBER` - located in the 'smoke_tests' module, in locals for each environment.
+- `NOTIFY_FIELD` - located in the 'smoke_tests' module for each environment.
 
 Then run the tests:
 ```make test```
@@ -65,12 +82,13 @@ Then similar to above, except you run rspec directly:
 bundle exec rspec
 ```
 
-Updating The Google API Token
------------------------------
+## Updating The Google API Token
 
-Instructions for updating the [token](https://github.com/alphagov/govwifi-smoke-tests/blob/363d6827e4eb7763003d0d9f4fd4f4288c6fa28a/smoke-tests-concourse.yml#L136) can be found [here](https://docs.google.com/document/d/1uAaho6jRFUyBT4WRFuDN8pfDmHjfYvG6hT_uo4g1pqA/edit#heading=h.2q4zw5lc8jgj)
+Instructions for updating the [Google API token](https://github.com/alphagov/govwifi-smoke-tests/blob/363d6827e4eb7763003d0d9f4fd4f4288c6fa28a/smoke-tests-concourse.yml#L136) [can be found here](https://docs.google.com/document/d/1uAaho6jRFUyBT4WRFuDN8pfDmHjfYvG6hT_uo4g1pqA/edit#heading=h.2q4zw5lc8jgj)
 
-Running The Smoke Tests In Our Environments
--------------------------------------------
+## Running The Smoke Tests In Our Environments
 
-The smoke tests have now been migrated from Concourse to AWS. Full instructions on how to run and edit the infrastructure around them can be found [here](https://docs.google.com/document/d/1RHNkGxJLr4BPPUlFgqDzCF6mSOXK0Kj2Yfb-GHXXNIA/). You will need to be a member of the GovWifi Team in order to access this guide.
+The smoke tests have now been migrated from Concourse to AWS. [Full instructions on how to run and edit the infrastructure around them can be found here](https://docs.google.com/document/d/1RHNkGxJLr4BPPUlFgqDzCF6mSOXK0Kj2Yfb-GHXXNIA/). You will need to be a member of the GovWifi Team in order to access this guide.
+
+## New Environments
+If creating smoke tests on new environments, ensure to create new secrets for all appropriate fields, also new templates in Notify will need creating, as well as API keys.  For Radius ensure that it knows about the ```task``` ip's as well as the smoke test org ip's ```<env>.wifi-smoke-tests-x```, these will need to be entered into the Admin App for the Smoke Test Org.

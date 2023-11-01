@@ -26,6 +26,8 @@ test: build
 		-e GOVWIFI_PHONE_NUMBER \
 		-e SMOKETEST_PHONE_NUMBER \
 		-e NOTIFY_FIELD \
+		-e EAP_TLS_CLIENT_CERT \
+		-e EAP_TLS_CLIENT_KEY \
 		app bundle exec rspec spec/system
 
 stop:
@@ -50,6 +52,8 @@ shell: build
 		-e GOVWIFI_PHONE_NUMBER \
 		-e SMOKETEST_PHONE_NUMBER \
 		-e NOTIFY_FIELD \
+		-e EAP_TLS_CLIENT_CERT \
+		-e EAP_TLS_CLIENT_KEY \
 		 app bundle exec sh
 
 .PHONY: build stop test shell

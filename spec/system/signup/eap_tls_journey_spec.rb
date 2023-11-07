@@ -2,7 +2,6 @@ require_relative "../../../lib/services"
 
 feature "Eap-tls Journey" do
   it "can connect successfully" do
-    pending
     eapol_test = GovwifiEapoltest.new(radius_ips: ENV["RADIUS_IPS"].split(","),
                                       secret: ENV["RADIUS_KEY"])
 
